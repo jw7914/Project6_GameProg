@@ -11,6 +11,8 @@
 		842DC67A2CA645EF0052A9C3 /* starter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 842DC6782CA645EF0052A9C3 /* starter.cpp */; };
 		84651B172C17EB5100817E28 /* kano.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84651B162C17EAFE00817E28 /* kano.png */; };
 		84651B1A2C17ED4900817E28 /* completed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84651B192C17ED4900817E28 /* completed.cpp */; };
+		BFC6F8BE2CF931F6004E63F6 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFC6F8BB2CF931F6004E63F6 /* Entity.cpp */; };
+		BFC6F8BF2CF931F6004E63F6 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFC6F8BD2CF931F6004E63F6 /* Map.cpp */; };
 		DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B522323DE3F007CECB1 /* main.cpp */; };
 		DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */; };
 		DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = DBDF1B5C2323DE8D007CECB1 /* shaders */; };
@@ -41,6 +43,10 @@
 		842DC6782CA645EF0052A9C3 /* starter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = starter.cpp; sourceTree = "<group>"; };
 		84651B162C17EAFE00817E28 /* kano.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kano.png; sourceTree = "<group>"; };
 		84651B192C17ED4900817E28 /* completed.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = completed.cpp; sourceTree = "<group>"; };
+		BFC6F8BA2CF931F6004E63F6 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
+		BFC6F8BB2CF931F6004E63F6 /* Entity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
+		BFC6F8BC2CF931F6004E63F6 /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
+		BFC6F8BD2CF931F6004E63F6 /* Map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* Project6 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project6; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B522323DE3F007CECB1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
@@ -109,6 +115,10 @@
 				DBDF1B5C2323DE8D007CECB1 /* shaders */,
 				DBDF1B5A2323DE8D007CECB1 /* stb_image.h */,
 				DBDF1B522323DE3F007CECB1 /* main.cpp */,
+				BFC6F8BA2CF931F6004E63F6 /* Entity.h */,
+				BFC6F8BB2CF931F6004E63F6 /* Entity.cpp */,
+				BFC6F8BC2CF931F6004E63F6 /* Map.h */,
+				BFC6F8BD2CF931F6004E63F6 /* Map.cpp */,
 			);
 			path = Project6;
 			sourceTree = "<group>";
@@ -182,6 +192,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				84651B1A2C17ED4900817E28 /* completed.cpp in Sources */,
+				BFC6F8BE2CF931F6004E63F6 /* Entity.cpp in Sources */,
+				BFC6F8BF2CF931F6004E63F6 /* Map.cpp in Sources */,
 				842DC67A2CA645EF0052A9C3 /* starter.cpp in Sources */,
 				DBDF1B532323DE3F007CECB1 /* main.cpp in Sources */,
 				DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */,
