@@ -4,7 +4,7 @@
 #define LEVEL_WIDTH 14
 #define LEVEL_HEIGHT 8
 
-constexpr char ENEMY_FILEPATH[]       = "enemy1.png";
+constexpr char ENEMY_FILEPATH[]       = "devil.png";
 
 
 unsigned int LEVELA_DATA[] =
