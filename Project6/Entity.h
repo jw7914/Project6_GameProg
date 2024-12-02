@@ -6,7 +6,7 @@
 #include "ShaderProgram.h"
 
 enum EntityType { PLATFORM, PLAYER, ENEMY  };
-enum AIType   { PATROL, JUMPING, WALKING };
+enum AIType   { PATROL, JUMPING, WALKING, IDLE };
 enum Animation { DEFAULT, ATTACK, DEATH, RUN, DAMAGE };
 
 
@@ -100,8 +100,8 @@ public:
     void face_down()  { m_animation_indices = m_walking[DOWN];  }
 
 
-    void move_left() { m_movement.x = -1.0f; face_left(); set_animation_state(RUN); }
-    void move_right() { m_movement.x = 1.0f;  face_right(); set_animation_state(RUN); }
+    void move_left() { m_movement.x = -1.0f; face_left(); }
+    void move_right() { m_movement.x = 1.0f;  face_right(); }
     void move_up() { m_movement.y = 1.0f;  face_up(); }
     void move_down() { m_movement.y = -1.0f; face_down(); }
     void attack() { set_animation_state(ATTACK); }

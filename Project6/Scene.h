@@ -27,6 +27,7 @@ struct GameState
     Entity *enemies;
     Entity *hearts;
     Entity *background;
+    Entity *projectiles;
     
     // ————— AUDIO ————— //
     Mix_Music *bgm;

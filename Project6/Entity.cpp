@@ -17,20 +17,17 @@ void Entity::ai_activate(Entity *player, float delta_time)
 {
 
     if (m_ai_type == PATROL){
-        m_theta += 1.0f * delta_time;
-        float movement = glm::sin(m_theta) * 2.5f;
+        float movement = -1.0f;
 
         m_movement = glm::vec3(movement, 0.0f, 0.0f);
             
         if (m_collided_bottom) {
             set_jumping_power(5.0f);
-            jump();
         }
     }
     if (m_ai_type == JUMPING) {
         if (m_collided_bottom) {
             set_jumping_power(8.5f);
-            jump();
         }
     }
     
@@ -45,8 +42,10 @@ void Entity::ai_activate(Entity *player, float delta_time)
         // Determine movement direction on the y-axis
         if (m_position.y < player->get_position().y && m_collided_bottom) {
             set_jumping_power(5.0f);
-            jump();
         }
+    }
+    if (m_ai_type == IDLE) {
+        m_movement = glm::vec3(0.0f, 0.0f, 0.0f);
     }
 }
 
@@ -379,6 +378,7 @@ int Entity::update(float delta_time, Entity *player, Entity *collidable_entities
     }
     
     m_velocity.x = m_movement.x * m_speed;
+    m_velocity.y = m_movement.y * m_speed;
     m_velocity += m_acceleration * delta_time;
     
     m_position.y += m_velocity.y * delta_time;

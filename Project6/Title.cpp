@@ -181,6 +181,9 @@ void Title::render(ShaderProgram *program)
           glm::vec3(2.0f,-3.0f,0.0f));
     Utility::draw_text(program, g_font_texture_id, "to start", 0.5f, 0.05f,
           glm::vec3(2.0f,-4.0f,0.0f));
-    Utility::draw_text(program, g_font_texture_id, "Space Defense", 0.5f, 0.05f,
+    Utility::draw_text(program, g_font_texture_id, "Halloween", 0.5f, 0.05f,
           glm::vec3(2.0f,-5.0f,0.0f));
+    Utility::draw_text(program, g_font_texture_id, "Defense", 0.5f, 0.05f,
+          glm::vec3(2.0f,-6.0f,0.0f));
+    
 }

@@ -1,6 +1,6 @@
 /**
 * Author: Jason Wu
-* Assignment: Space Defense
+* Assignment: Halloween Defense
 * Date due: [Your presentation date], 2:00pm
 * I pledge that I have completed this assignment without
 * collaborating with anyone else, in conformance with the
@@ -190,24 +190,40 @@ void process_input()
         
     if (!g_current_scene->get_state().lose){
         if (key_state[SDL_SCANCODE_A]) {
-            g_current_scene->get_state().player->attack();
+            g_current_scene->get_state().player->set_animation_index(DEFAULT);
             attacking = true;
         }
         else {
             attacking = false;
         }
         
-        if (!attacking){
-            if (key_state[SDL_SCANCODE_LEFT])        g_current_scene->get_state().player->move_left();
+        if (g_current_scene->get_state().won) {
+            if (key_state[SDL_SCANCODE_LEFT]) {
+                if (g_current_scene->get_state().player->get_position().x > 0.0) {
+                    g_current_scene->get_state().player->move_left();
+                }
+            }
             else if (key_state[SDL_SCANCODE_RIGHT])  g_current_scene->get_state().player->move_right();
         }
+        
+        if (key_state[SDL_SCANCODE_UP]) {
+            if (g_current_scene->get_state().player->get_position().y < -0.75) {
+                g_current_scene->get_state().player->move_up();
+            }
+        }
+        else if (key_state[SDL_SCANCODE_DOWN]) {
+            if (g_current_scene->get_state().player->get_position().y > -7.0) {
+                g_current_scene->get_state().player->move_down();
+            }
+        }
+        
         
         
         if (glm::length( g_current_scene->get_state().player->get_movement()) > 1.0f)
             g_current_scene->get_state().player->normalise_movement();
     }
     else {
-        g_current_scene->get_state().player->set_animation_state(DEATH);
+        g_current_scene->get_state().player->set_animation_state(DEFAULT);
     }
 }
 

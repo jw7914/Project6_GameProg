@@ -9,15 +9,27 @@ constexpr char ENEMY_FILEPATH[]       = "enemy1.png";
 
 unsigned int LEVELA_DATA[] =
 {
-    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    4, 0, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0,
-    4, 0, 0, 0, 0, 80, 120, 120, 120, 120, 120, 120, 80, 0,
-    4, 0, 0, 0, 80, 120, 120, 120, 120, 120, 120, 120, 120, 80,
-    4, 80, 80, 80, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
+
+//unsigned int LEVELA_DATA[] =
+//{
+//    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//    4, 0, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0,
+//    4, 0, 0, 0, 0, 80, 120, 120, 120, 120, 120, 120, 80, 0,
+//    4, 0, 0, 0, 80, 120, 120, 120, 120, 120, 120, 120, 120, 80,
+//    4, 80, 80, 80, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120
+//};
 
 LevelA::~LevelA()
 {
@@ -25,6 +37,7 @@ LevelA::~LevelA()
     delete [] m_game_state.hearts;
     delete    m_game_state.player;
     delete    m_game_state.map;
+    delete [] m_game_state.background;
     Mix_FreeChunk(m_game_state.jump_sfx);
     Mix_FreeMusic(m_game_state.bgm);
 }
@@ -38,37 +51,29 @@ void LevelA::initialise()
     m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVELA_DATA, map_texture_id, 1.0f, 20, 9);
     
     // Code from main.cpp's initialise()
-    /**
-     George's Stuff
-     */
-    std::vector<GLuint> cat_texture_ids = {
-        Utility::load_texture("Meow-Knight_Idle.png"),   // IDLE spritesheet
-        Utility::load_texture("Meow-Knight_Attack_3.png"),  // ATTACK spritesheet
-        Utility::load_texture("Meow-Knight_Death.png"), // DEATH spritesheet
-        Utility::load_texture("Meow-Knight_Dodge.png"), // RUN spritesheet
-        Utility::load_texture("Meow-Knight_Take_Damage.png") // DAMAGE spritesheet
+    std::vector<GLuint> player_texture_ids = {
+        Utility::load_texture("row_padded_image.png"),   // IDLE spritesheet
     };
 
-    std::vector<std::vector<int>> cat_animations = {
-        {0, 1, 2, 3, 4, 5},       // IDLE animation frames
-        {0, 1, 2, 3},  // ATTACK animation frames
-        {0, 1, 2, 3, 4, 5},       // DEATH animation frames
-        {2, 2, 3, 3, 5, 5, 6, 6}, //RUN animation frames
-        {0, 1, 2} //DAMAGE animation frames
+    std::vector<std::vector<int>> player_animations = {
+        {1, 1, 1},       // IDLE animation frames
+        {1, 1, 1}     // ATTACK animations
     };
     
-    glm::vec3 acceleration = glm::vec3(0.0f, -4.81f, 0.0f);
+//    glm::vec3 acceleration = glm::vec3(0.0f, -4.81f, 0.0f);
+    glm::vec3 acceleration = glm::vec3(0.0f, 0.0f, 0.0f);
+
         
     m_game_state.player =  new Entity(
-                                      cat_texture_ids,
+                                      player_texture_ids,
                                       5.0f,
                                       acceleration,
                                       3.0f,
-                                      cat_animations,
+                                      player_animations,
                                       0.0f,
-                                      3,
-                                      0,
                                       1,
+                                      0,
+                                      3,
                                       3,
                                       0.75f,
                                       1.0f,
@@ -108,6 +113,21 @@ void LevelA::initialise()
         m_game_state.hearts[i].update(0.0f, NULL, NULL, 0, NULL);
         m_game_state.hearts[i].set_scale(glm::vec3(0.5f,0.5f,0.0f));
     }
+    
+    m_game_state.background = new Entity[2];
+    GLuint background1_texture_id = Utility::load_texture("Background_0.png");
+    GLuint background2_texture_id = Utility::load_texture("Background_1.png");
+    m_game_state.background[0] = Entity();
+    m_game_state.background[0].set_texture_id(background1_texture_id);
+    m_game_state.background[0].set_scale(glm::vec3(10.0f, 8.0f, 0.0f));
+    m_game_state.background[0].set_position(glm::vec3(5.0f, -4.0f, 0.0f));
+    m_game_state.background[0].update(0.0f, NULL, NULL, 0, NULL);
+
+    m_game_state.background[1] = Entity();
+    m_game_state.background[1].set_texture_id(background2_texture_id);
+    m_game_state.background[1].set_scale(glm::vec3(10.0f, 8.0f, 0.0f));
+    m_game_state.background[1].set_position(glm::vec3(5.0f, -4.0f, 0.0f));
+    m_game_state.background[1].update(0.0f, NULL, NULL, 0, NULL);
 
     
     /**
@@ -149,6 +169,8 @@ void LevelA::update(float delta_time)
         m_game_state.hearts[i].set_position(glm::vec3((player_pos.x + i * spacing) - 0.5f, player_pos.y + 1.0f, 0.0f));
         m_game_state.hearts[i].update(0.0f, NULL, NULL, 0, NULL);
     }
+    
+    std::cout << player_pos.y << std::endl;
 
 
     for (int i = 0; i < ENEMY_COUNT; i++)
@@ -161,6 +183,9 @@ void LevelA::update(float delta_time)
 
 void LevelA::render(ShaderProgram *program)
 {
+    for(int i = 0; i < 2; i++) {
+        m_game_state.background[i].render(program);
+    }
     int num_active = 1;
     m_game_state.map->render(program);
     for (int i = 0; i < ENEMY_COUNT; i++)
