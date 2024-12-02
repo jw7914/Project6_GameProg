@@ -1,240 +1,302 @@
 /**
- * @file main.cpp
- * @author Sebastián Romero Cruz (sebastian.romerocruz@nyu.edu)
- * @brief A simple g_shader_program to demonstrate player input in OpenGL.
- * @date 2024-06-10
- *
- * @copyright NYU Tandon (c) 2024
- */
+* Author: Jason Wu
+* Assignment: Space Defense
+* Date due: [Your presentation date], 2:00pm
+* I pledge that I have completed this assignment without
+* collaborating with anyone else, in conformance with the
+* NYU School of Engineering Policies and Procedures on
+* Academic Misconduct.
+**/
+
 #define GL_SILENCE_DEPRECATION
-#define STB_IMAGE_IMPLEMENTATION
 #define GL_GLEXT_PROTOTYPES 1
-#define LOG(argument) std::cout << argument << '\n'
+#define FIXED_TIMESTEP 0.0166666f
+#define LEFT_EDGE 5.0f
+#define RIGHT_EDGE 13.0f
+
 
 #ifdef _WINDOWS
-    #include <GL/glew.h>
+#include <GL/glew.h>
 #endif
 
+#include <SDL_mixer.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include "glm/mat4x4.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "ShaderProgram.h"
-#include "stb_image.h"
+#include "cmath"
+#include <ctime>
+#include <vector>
+#include "Entity.h"
+#include "Map.h"
+#include "Utility.h"
+#include "Scene.h"
+#include "LevelA.h"
+#include "LevelB.h"
+#include "LevelC.h"
+#include "Title.h"
 
-enum AppStatus { RUNNING, TERMINATED };
+// ––––– CONSTANTS ––––– //
+constexpr int WINDOW_WIDTH  = 640 * 2,
+          WINDOW_HEIGHT = 800;
 
-constexpr int WINDOW_WIDTH  = 640,
-              WINDOW_HEIGHT = 480;
+constexpr float BG_RED     = 0.1922f,
+            BG_BLUE    = 0.549f,
+            BG_GREEN   = 0.9059f,
+            BG_OPACITY = 1.0f;
 
-constexpr float BG_RED     = 0.9765625f,
-                BG_GREEN   = 0.97265625f,
-                BG_BLUE    = 0.9609375f,
-                BG_OPACITY = 1.0f;
-
-constexpr int VIEWPORT_X      = 0,
-              VIEWPORT_Y      = 0,
-              VIEWPORT_WIDTH  = WINDOW_WIDTH,
-              VIEWPORT_HEIGHT = WINDOW_HEIGHT;
+constexpr int VIEWPORT_X = 0,
+          VIEWPORT_Y = 0,
+          VIEWPORT_WIDTH  = WINDOW_WIDTH,
+          VIEWPORT_HEIGHT = WINDOW_HEIGHT;
 
 constexpr char V_SHADER_PATH[] = "shaders/vertex_textured.glsl",
-               F_SHADER_PATH[] = "shaders/fragment_textured.glsl";
+                F_SHADER_PATH[] = "shaders/fragment_textured.glsl";
 
-constexpr float MILLISECONDS_IN_SECOND = 1000.0f;
+constexpr float MILLISECONDS_IN_SECOND = 1000.0;
 
-constexpr GLint NUMBER_OF_TEXTURES = 1,
-                LEVEL_OF_DETAIL    = 0,
-                TEXTURE_BORDER     = 0;
+enum AppStatus { RUNNING, TERMINATED };
+// ––––– GLOBAL VARIABLES ––––– //
 
-constexpr char SHIELD_SPRITE_FILEPATH[] = "shield.png";
-constexpr glm::vec3 INIT_SCALE = glm::vec3(2.0f, 2.3985f, 0.0f);
+Scene  *g_current_scene;
+LevelA *g_levelA;
+LevelB *g_levelB;
+LevelC *g_levelC;
+Title *title_screen;
 
-SDL_Window* g_display_window = nullptr;
+Scene   *g_levels[4];
+
+SDL_Window* g_display_window;
+
 AppStatus g_app_status = RUNNING;
 
-ShaderProgram g_shader_program = ShaderProgram();
-
-GLuint g_shield_texture_id;
-
-glm::mat4 g_view_matrix,
-          g_shield_matrix,
-          g_projection_matrix;
+ShaderProgram g_shader_program;
+glm::mat4 g_view_matrix, g_projection_matrix;
 
 float g_previous_ticks = 0.0f;
+float g_accumulator = 0.0f;
 
-glm::vec3 g_shield_position = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 g_shield_movement = glm::vec3(0.0f, 0.0f, 0.0f);
+bool g_is_colliding_bottom = false;
+bool attacking = false;
 
-float g_shield_speed = 5.0f;  // move 1 unit per second
-
-void initialise();
-void process_input();
-void update();
-void render();
-void shutdown();
-
-GLuint load_texture(const char* filepath);
-void draw_object(glm::mat4 &object_model_matrix, GLuint &object_texture_id);
-
-
-GLuint load_texture(const char* filepath)
+// ––––– GENERAL FUNCTIONS ––––– //
+void switch_to_scene(Scene *scene)
 {
-    // STEP 1: Loading the image file
-    int width, height, number_of_components;
-    unsigned char* image = stbi_load(filepath, &width, &height, &number_of_components,
-                                     STBI_rgb_alpha);
-
-    if (image == NULL)
-    {
-        LOG("Unable to load image. Make sure the path is correct.");
-        assert(false);
-    }
-
-    // STEP 2: Generating and binding a texture ID to our image
-    GLuint textureID;
-    glGenTextures(NUMBER_OF_TEXTURES, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    glTexImage2D(GL_TEXTURE_2D, LEVEL_OF_DETAIL, GL_RGBA, width, height, TEXTURE_BORDER,
-                 GL_RGBA, GL_UNSIGNED_BYTE, image);
-
-    // STEP 3: Setting our texture filter parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-    // STEP 4: Releasing our file from memory and returning our texture id
-    stbi_image_free(image);
-
-    return textureID;
+    g_current_scene = scene;
+    g_current_scene->initialise(); // DON'T FORGET THIS STEP!
 }
-
 
 void initialise()
 {
-    SDL_Init(SDL_INIT_VIDEO);
-    g_display_window = SDL_CreateWindow("Hello, Playa Input!",
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+    g_display_window = SDL_CreateWindow("Project 6",
                                       SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                       WINDOW_WIDTH, WINDOW_HEIGHT,
                                       SDL_WINDOW_OPENGL);
-
+    
     SDL_GLContext context = SDL_GL_CreateContext(g_display_window);
     SDL_GL_MakeCurrent(g_display_window, context);
-
-    if (g_display_window == nullptr)
-    {
-        shutdown();
-    }
-
+    
 #ifdef _WINDOWS
     glewInit();
 #endif
-
+    
     glViewport(VIEWPORT_X, VIEWPORT_Y, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-
+    
     g_shader_program.load(V_SHADER_PATH, F_SHADER_PATH);
-
-    g_shield_texture_id = load_texture(SHIELD_SPRITE_FILEPATH);
-    g_shield_matrix     = glm::mat4(1.0f);
-    g_view_matrix       = glm::mat4(1.0f);
+    
+    g_view_matrix = glm::mat4(1.0f);
     g_projection_matrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
-
+    
     g_shader_program.set_projection_matrix(g_projection_matrix);
     g_shader_program.set_view_matrix(g_view_matrix);
-
+    
     glUseProgram(g_shader_program.get_program_id());
+    
     glClearColor(BG_RED, BG_BLUE, BG_GREEN, BG_OPACITY);
-
+    
+    // enable blending
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
 
+    g_levelA = new LevelA();
+    g_levelB = new LevelB();
+    g_levelC = new LevelC();
+    title_screen = new Title();
+
+    
+    g_levels[0] = g_levelA;
+    g_levels[1] = g_levelB;
+    g_levels[2] = g_levelC;
+    g_levels[3] = title_screen;
+
+    
+    // Start at level A
+    switch_to_scene(g_levels[3]);
+    
+}
 
 void process_input()
 {
+    // VERY IMPORTANT: If nothing is pressed, we don't want to go anywhere
+    if (g_current_scene != g_levels[3]){
+        g_current_scene->get_state().player->set_movement(glm::vec3(0.0f));
+        g_current_scene->get_state().player->set_animation_state(DEFAULT);
+    }
+    
     SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
-        if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE)
+        while (SDL_PollEvent(&event))
         {
-            g_app_status = TERMINATED;
+            switch (event.type) {
+                    // End game
+                case SDL_QUIT:
+                case SDL_WINDOWEVENT_CLOSE:
+                    g_app_status = TERMINATED;
+                    break;
+                    
+                case SDL_KEYDOWN:
+                    switch (event.key.keysym.sym) {
+                        case SDLK_q:
+                            // Quit the game with a keystroke
+                            g_app_status = TERMINATED;
+                            break;
+                            
+                        case SDLK_SPACE:
+                            // Jump
+                            if (g_current_scene != g_levels[3]){
+                                if (g_current_scene->get_state().player->get_collided_bottom() && !g_current_scene->get_state().lose)
+                                {
+                                    g_current_scene->get_state().player->jump();
+                                    Mix_PlayChannel(-1, g_current_scene->get_state().jump_sfx, 0);
+                                }
+                            }
+                            break;
+                        case SDLK_RETURN:
+                            if (g_current_scene == g_levels[3])
+                                switch_to_scene(g_levels[0]);
+                            
+                        default:
+                            break;
+                    }
+                    
+                default:
+                    break;
+            }
         }
+        
+    
+        const Uint8 *key_state = SDL_GetKeyboardState(NULL);
+        
+    if (!g_current_scene->get_state().lose){
+        if (key_state[SDL_SCANCODE_A]) {
+            g_current_scene->get_state().player->attack();
+            attacking = true;
+        }
+        else {
+            attacking = false;
+        }
+        
+        if (!attacking){
+            if (key_state[SDL_SCANCODE_LEFT])        g_current_scene->get_state().player->move_left();
+            else if (key_state[SDL_SCANCODE_RIGHT])  g_current_scene->get_state().player->move_right();
+        }
+        
+        
+        if (glm::length( g_current_scene->get_state().player->get_movement()) > 1.0f)
+            g_current_scene->get_state().player->normalise_movement();
+    }
+    else {
+        g_current_scene->get_state().player->set_animation_state(DEATH);
     }
 }
 
 
 void update()
 {
-    /* DELTA TIME */
-    float ticks = (float) SDL_GetTicks() / MILLISECONDS_IN_SECOND;
+
+    float ticks = (float)SDL_GetTicks() / MILLISECONDS_IN_SECOND;
     float delta_time = ticks - g_previous_ticks;
     g_previous_ticks = ticks;
+    
+    delta_time += g_accumulator;
+    
+    if (delta_time < FIXED_TIMESTEP)
+    {
+        g_accumulator = delta_time;
+        return;
+    }
+    
+    while (delta_time >= FIXED_TIMESTEP) {
+        g_current_scene->update(FIXED_TIMESTEP);
 
-    /* GAME LOGIC */
-    g_shield_position += g_shield_movement * g_shield_speed * delta_time;
-
-    /* TRANSFORMATIONS */
-    g_shield_matrix = glm::mat4(1.0f);
-
-    g_shield_matrix = glm::translate(g_shield_matrix, g_shield_position);
-    g_shield_matrix = glm::scale(g_shield_matrix, INIT_SCALE);
+//        if (g_is_colliding_bottom == false && g_current_scene->get_state().player->get_collided_bottom()) g_effects->start(SHAKE, 1.0f);
+        
+        g_is_colliding_bottom = g_current_scene->get_state().player->get_collided_bottom();
+        
+        delta_time -= FIXED_TIMESTEP;
+    }
+    
+    g_accumulator = delta_time;
+    
+    // Prevent the camera from showing anything outside of the "edge" of the level
+    g_view_matrix = glm::mat4(1.0f);
+    if (g_current_scene->get_state().player->get_position().x > LEFT_EDGE) {
+        g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-g_current_scene->get_state().player->get_position().x, 3.75, 0));
+    } else {
+        g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-5, 3.75, 0));
+    }
+    
+    
+    if (g_current_scene == g_levelA && g_current_scene->get_state().player->get_position().y < -10.0f) {
+        int currLives = g_current_scene->get_state().lives;
+        switch_to_scene(g_levelB);
+        g_current_scene->set_number_of_lives(currLives);
+    }
+    if (g_current_scene == g_levelB && g_current_scene->get_state().player->get_position().y < -10.0f){
+        int currLives = g_current_scene->get_state().lives;
+        switch_to_scene(g_levelC);
+        g_current_scene->set_number_of_lives(currLives);
+    }
 }
-
-
-void draw_object(glm::mat4 &object_model_matrix, GLuint &object_texture_id)
-{
-    g_shader_program.set_model_matrix(object_model_matrix);
-    glBindTexture(GL_TEXTURE_2D, object_texture_id);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-}
-
 
 void render()
 {
+    g_shader_program.set_view_matrix(g_view_matrix);
     glClear(GL_COLOR_BUFFER_BIT);
-
-    float vertices[] = {
-        -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,  // triangle 1
-        -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f   // triangle 2
-    };
-
-    // Textures
-    float texture_coordinates[] = {
-        0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,     // triangle 1
-        0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,     // triangle 2
-    };
-
-    glVertexAttribPointer(g_shader_program.get_position_attribute(), 2, GL_FLOAT, false,
-                          0, vertices);
-    glEnableVertexAttribArray(g_shader_program.get_position_attribute());
-
-    glVertexAttribPointer(g_shader_program.get_tex_coordinate_attribute(), 2, GL_FLOAT,
-                          false, 0, texture_coordinates);
-    glEnableVertexAttribArray(g_shader_program.get_tex_coordinate_attribute());
-
-    // Bind texture
-    draw_object(g_shield_matrix, g_shield_texture_id);
-
-    // We disable two attribute arrays now
-    glDisableVertexAttribArray(g_shader_program.get_position_attribute());
-    glDisableVertexAttribArray(g_shader_program.get_tex_coordinate_attribute());
-
+ 
+    glUseProgram(g_shader_program.get_program_id());
+    g_current_scene->render(&g_shader_program);
+    
     SDL_GL_SwapWindow(g_display_window);
 }
 
+void shutdown()
+{
+    SDL_Quit();
+    
+    delete g_levelA;
+    delete g_levelB;
+    delete g_levelC;
+    delete title_screen;
+}
 
-void shutdown() { SDL_Quit(); }
-
-
+// ––––– DRIVER GAME LOOP ––––– //
 int main(int argc, char* argv[])
 {
     initialise();
-
+    
     while (g_app_status == RUNNING)
     {
         process_input();
         update();
+        
+        if (g_current_scene->get_state().next_scene_id >= 0) switch_to_scene(g_levels[g_current_scene->get_state().next_scene_id]);
+        
         render();
     }
-
+    
+    
     shutdown();
     return 0;
 }

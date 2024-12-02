@@ -112,4 +112,3 @@ bool Map::is_solid(glm::vec3 position, float *penetration_x, float *penetration_
     
     return true;
 }
-
