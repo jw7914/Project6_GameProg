@@ -43,7 +43,7 @@ void Title::initialise()
     
     // Code from main.cpp's initialise()
     std::vector<GLuint> player_texture_ids = {
-        Utility::load_texture("row_padded_image.png"),   // IDLE spritesheet
+        Utility::load_texture("player.png"),   // IDLE spritesheet
     };
 
     std::vector<std::vector<int>> player_animations = {

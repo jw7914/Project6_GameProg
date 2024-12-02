@@ -27,10 +27,16 @@
 		BF41DB522CFD311A0081F250 /* Background_0.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB512CFD31140081F250 /* Background_0.png */; };
 		BF41DB542CFD35450081F250 /* Spaceships.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB532CFD34270081F250 /* Spaceships.png */; };
 		BF41DB572CFD439F0081F250 /* player_animations.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB562CFD42760081F250 /* player_animations.png */; };
-		BF41DB622CFD486C0081F250 /* spaced_rows.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB612CFD48690081F250 /* spaced_rows.png */; };
-		BF41DB642CFD49190081F250 /* row_padded_image.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB632CFD49090081F250 /* row_padded_image.png */; };
 		BF41DB662CFD507E0081F250 /* Background_1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB652CFD4F490081F250 /* Background_1.png */; };
 		BF41DB692CFD58C20081F250 /* devil.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB682CFD58A20081F250 /* devil.png */; };
+		BF41DB722CFD6B0A0081F250 /* mummy.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB6F2CFD5BA20081F250 /* mummy.png */; };
+		BF41DB732CFD6B0A0081F250 /* frankie.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB702CFD5BD50081F250 /* frankie.png */; };
+		BF41DB742CFD6B0A0081F250 /* eyeball.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB712CFD5C1D0081F250 /* eyeball.png */; };
+		BF41DB752CFD6B0A0081F250 /* vampire.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB6D2CFD5A0F0081F250 /* vampire.png */; };
+		BF41DB762CFD6B0B0081F250 /* witch.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB6C2CFD59AE0081F250 /* witch.png */; };
+		BF41DB772CFD6B0B0081F250 /* skeleton.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB6E2CFD5B6C0081F250 /* skeleton.png */; };
+		BF41DB782CFD6B0B0081F250 /* skull.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB6A2CFD596A0081F250 /* skull.png */; };
+		BF41DB7A2CFD6B570081F250 /* player.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB792CFD6B2E0081F250 /* player.png */; };
 		DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */; };
 		DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = DBDF1B5C2323DE8D007CECB1 /* shaders */; };
 		DBDF1B632323DEDA007CECB1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBDF1B622323DEDA007CECB1 /* OpenGL.framework */; };
@@ -48,11 +54,17 @@
 			dstSubfolderSpec = 6;
 			files = (
 				BF41DB412CFD2DE80081F250 /* bounce.wav in CopyFiles */,
-				BF41DB422CFD2DE80081F250 /* dooblydoo.mp3 in CopyFiles */,
+				BF41DB7A2CFD6B570081F250 /* player.png in CopyFiles */,
+				BF41DB722CFD6B0A0081F250 /* mummy.png in CopyFiles */,
+				BF41DB732CFD6B0A0081F250 /* frankie.png in CopyFiles */,
+				BF41DB742CFD6B0A0081F250 /* eyeball.png in CopyFiles */,
+				BF41DB752CFD6B0A0081F250 /* vampire.png in CopyFiles */,
 				BF41DB692CFD58C20081F250 /* devil.png in CopyFiles */,
-				BF41DB622CFD486C0081F250 /* spaced_rows.png in CopyFiles */,
+				BF41DB762CFD6B0B0081F250 /* witch.png in CopyFiles */,
+				BF41DB772CFD6B0B0081F250 /* skeleton.png in CopyFiles */,
+				BF41DB782CFD6B0B0081F250 /* skull.png in CopyFiles */,
+				BF41DB422CFD2DE80081F250 /* dooblydoo.mp3 in CopyFiles */,
 				BF41DB662CFD507E0081F250 /* Background_1.png in CopyFiles */,
-				BF41DB642CFD49190081F250 /* row_padded_image.png in CopyFiles */,
 				BF41DB542CFD35450081F250 /* Spaceships.png in CopyFiles */,
 				BF41DB572CFD439F0081F250 /* player_animations.png in CopyFiles */,
 				BF41DB522CFD311A0081F250 /* Background_0.png in CopyFiles */,
@@ -97,8 +109,6 @@
 		BF41DB512CFD31140081F250 /* Background_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_0.png; sourceTree = "<group>"; };
 		BF41DB532CFD34270081F250 /* Spaceships.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceships.png; sourceTree = "<group>"; };
 		BF41DB562CFD42760081F250 /* player_animations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player_animations.png; sourceTree = "<group>"; };
-		BF41DB612CFD48690081F250 /* spaced_rows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spaced_rows.png; sourceTree = "<group>"; };
-		BF41DB632CFD49090081F250 /* row_padded_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = row_padded_image.png; sourceTree = "<group>"; };
 		BF41DB652CFD4F490081F250 /* Background_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_1.png; sourceTree = "<group>"; };
 		BF41DB682CFD58A20081F250 /* devil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = devil.png; sourceTree = "<group>"; };
 		BF41DB6A2CFD596A0081F250 /* skull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skull.png; sourceTree = "<group>"; };
@@ -108,6 +118,7 @@
 		BF41DB6F2CFD5BA20081F250 /* mummy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mummy.png; sourceTree = "<group>"; };
 		BF41DB702CFD5BD50081F250 /* frankie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frankie.png; sourceTree = "<group>"; };
 		BF41DB712CFD5C1D0081F250 /* eyeball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eyeball.png; sourceTree = "<group>"; };
+		BF41DB792CFD6B2E0081F250 /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* Project6 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project6; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
 		DBDF1B5A2323DE8D007CECB1 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -188,10 +199,9 @@
 				BF41DB6C2CFD59AE0081F250 /* witch.png */,
 				BF41DB6E2CFD5B6C0081F250 /* skeleton.png */,
 				BF41DB6A2CFD596A0081F250 /* skull.png */,
-				BF41DB612CFD48690081F250 /* spaced_rows.png */,
+				BF41DB792CFD6B2E0081F250 /* player.png */,
 				BF41DB652CFD4F490081F250 /* Background_1.png */,
 				BF41DB2F2CFD2DCE0081F250 /* new_tilemap.png */,
-				BF41DB632CFD49090081F250 /* row_padded_image.png */,
 				BF41DB302CFD2DCE0081F250 /* retro-jump-3-236683.wav */,
 				BF41DB312CFD2DCE0081F250 /* Scene.h */,
 				BF41DB322CFD2DCE0081F250 /* Scene.cpp */,

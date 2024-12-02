@@ -104,7 +104,6 @@ void Entity::set_animation_state(Animation new_animation)
    // Check if we are leaving the ATTACK animation
    if (m_prev_animation == ATTACK && new_animation != ATTACK) {
        // Reset the position adjustment made during ATTACK
-       m_position.x -= 0.5f;
        m_scale.x = m_scale.y;
    }
 
@@ -128,8 +127,6 @@ void Entity::set_animation_state(Animation new_animation)
 
        case ATTACK:
            if (m_scale.x < m_scale.y * 2.0) {
-               m_scale.x *= 2.0;
-               m_position.x += 0.5f;
            }
            break;
 

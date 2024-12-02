@@ -190,7 +190,8 @@ void process_input()
         
     if (!g_current_scene->get_state().lose){
         if (key_state[SDL_SCANCODE_A]) {
-            g_current_scene->get_state().player->set_animation_index(DEFAULT);
+            g_current_scene->get_state().player->set_animation_state(ATTACK);
+            std::cout << g_current_scene->get_state().player->get_curr_animation() << std::endl;
             attacking = true;
         }
         else {

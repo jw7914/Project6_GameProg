@@ -4,7 +4,9 @@
 #define LEVEL_WIDTH 14
 #define LEVEL_HEIGHT 8
 
-constexpr char ENEMY_FILEPATH[]       = "devil.png";
+constexpr char ENEMY1_FILEPATH[]       = "devil.png";
+constexpr char ENEMY2_FILEPATH[]       = "witch.png";
+constexpr char ENEMY3_FILEPATH[]       = "mummy.png";
 
 
 unsigned int LEVELA_DATA[] =
@@ -52,12 +54,13 @@ void LevelA::initialise()
     
     // Code from main.cpp's initialise()
     std::vector<GLuint> player_texture_ids = {
-        Utility::load_texture("row_padded_image.png"),   // IDLE spritesheet
+        Utility::load_texture("player.png"),   // IDLE spritesheet
+        Utility::load_texture("player.png"),
     };
 
     std::vector<std::vector<int>> player_animations = {
         {1, 1, 1},       // IDLE animation frames
-        {1, 1, 1}     // ATTACK animations
+        {2, 2, 2}     // ATTACK animations
     };
     
 //    glm::vec3 acceleration = glm::vec3(0.0f, -4.81f, 0.0f);
@@ -88,13 +91,18 @@ void LevelA::initialise()
     
     /**
     Enemies' stuff */
-    GLuint enemy_texture_id = Utility::load_texture(ENEMY_FILEPATH);
+    std::vector<GLuint> enemy_texture_ids = {
+        Utility::load_texture(ENEMY1_FILEPATH),
+        Utility::load_texture(ENEMY2_FILEPATH),
+        Utility::load_texture(ENEMY3_FILEPATH)};
 
     m_game_state.enemies = new Entity[ENEMY_COUNT];
 
+    int multiplierX = 5;
+    int multiplierY = 2;
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
-        m_game_state.enemies[i] =  Entity(enemy_texture_id, 0.0f, 1.0f, 1.0f, ENEMY, PATROL);
+        m_game_state.enemies[i] =  Entity(enemy_texture_ids[i], 0.0f, 1.0f, 1.0f, ENEMY, PATROL);
         m_game_state.enemies[i].set_scale(glm::vec3(1.0f,1.0f,0.0f));
         m_game_state.enemies[i].set_movement(glm::vec3(0.0f));
         m_game_state.enemies[i].set_acceleration(glm::vec3(0.0f, -9.81f, 0.0f));
@@ -102,7 +110,7 @@ void LevelA::initialise()
         m_game_state.enemies[i].set_entity_type(ENEMY);
         m_game_state.enemies[i].set_speed(1.0f);
         m_game_state.enemies[i].set_ai_type(PATROL);
-        m_game_state.enemies[i].set_position(glm::vec3(6.0f, -3.0f, 0.0f));
+        m_game_state.enemies[i].set_position(glm::vec3(6.0f + (i * multiplierX), -5.0f + (i* multiplierY), 0.0f));
     }
     
     GLuint heart_texture_id = Utility::load_texture("heart.png");
@@ -157,6 +165,21 @@ void LevelA::update(float delta_time)
             m_game_state.lose = true;
         }
     }
+    
+    for (int i = 0; i < ENEMY_COUNT; i++) {
+        if (m_game_state.enemies[i].get_position().x < 0.0) {
+            m_game_state.death = true;
+        }
+        if (m_game_state.death) {
+            m_game_state.lives -= 1;
+            m_game_state.death = false;
+            m_game_state.reset = true;
+        }
+        if (m_game_state.lives == 0) {
+            m_game_state.lose = true;
+        }
+    }
+    
     if (m_game_state.reset) {
         initialise();
         m_game_state.reset = false;
@@ -166,12 +189,9 @@ void LevelA::update(float delta_time)
     glm::vec3 player_pos = m_game_state.player->get_position();
     for (int i = 0; i < 3; i++) {
         float spacing = 0.5f;
-        m_game_state.hearts[i].set_position(glm::vec3((player_pos.x + i * spacing) - 0.5f, player_pos.y + 1.0f, 0.0f));
+        m_game_state.hearts[i].set_position(glm::vec3((8.5f + i * spacing), -0.25f, 0.0f));
         m_game_state.hearts[i].update(0.0f, NULL, NULL, 0, NULL);
     }
-    
-    std::cout << player_pos.y << std::endl;
-
 
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
@@ -186,7 +206,7 @@ void LevelA::render(ShaderProgram *program)
     for(int i = 0; i < 2; i++) {
         m_game_state.background[i].render(program);
     }
-    int num_active = 1;
+    int num_active = ENEMY_COUNT;
     m_game_state.map->render(program);
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
@@ -209,7 +229,8 @@ void LevelA::render(ShaderProgram *program)
     if (num_active == 0) {
         GLuint g_font_texture_id = Utility::load_texture("font1.png");
         Utility::draw_text(program, g_font_texture_id, "Level Clear", 0.5f, 0.05f,
-              glm::vec3(5.0f,-2.0f,0.0f));
+              glm::vec3(2.0f,-2.0f,0.0f));
+        m_game_state.won = true;
     }
     
     m_game_state.player->render(program);
