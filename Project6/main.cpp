@@ -204,7 +204,7 @@ void process_input()
     
         const Uint8 *key_state = SDL_GetKeyboardState(NULL);
     for(int i = 0; i < g_current_scene->get_state().num_player_projectiles; i++) {
-        std::cout << i << ": " << g_current_scene->get_state().player_projectiles[i].isActive() << std::endl;
+//        std::cout << i << ": " << g_current_scene->get_state().player_projectiles[i].isActive() << std::endl;
 
     }
     if (!g_current_scene->get_state().lose){

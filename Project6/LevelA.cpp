@@ -23,18 +23,6 @@ unsigned int LEVELA_DATA[] =
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
-//unsigned int LEVELA_DATA[] =
-//{
-//    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//    4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//    4, 0, 0, 0, 0, 0, 80, 80, 80, 80, 80, 80, 0, 0,
-//    4, 0, 0, 0, 0, 80, 120, 120, 120, 120, 120, 120, 80, 0,
-//    4, 0, 0, 0, 80, 120, 120, 120, 120, 120, 120, 120, 120, 80,
-//    4, 80, 80, 80, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120
-//};
-
 LevelA::~LevelA()
 {
     delete [] m_game_state.enemies;
@@ -99,6 +87,7 @@ void LevelA::initialise()
         m_game_state.player_projectiles[i].set_texture_id(arrow_texture_id);
         m_game_state.player_projectiles[i].set_entity_type(PROJECTILE);
         m_game_state.player_projectiles[i].set_scale(glm::vec3(1.0f,1.0f,0.0f));
+        m_game_state.player_projectiles[i].set_position(m_game_state.player->get_position());
         m_game_state.player_projectiles[i].deactivate();
         m_game_state.player_projectiles[i].set_speed(1.0f);
         m_game_state.player_projectiles[i].set_movement(glm::vec3(0.0f));
@@ -207,19 +196,20 @@ void LevelA::update(float delta_time)
         m_game_state.hearts[i].set_position(glm::vec3((8.5f + i * spacing), -0.25f, 0.0f));
         m_game_state.hearts[i].update(0.0f, NULL, NULL, 0, NULL);
     }
-
-    for (int i = 0; i < ENEMY_COUNT; i++)
-    {
-        if (m_game_state.enemies[i].isActive()){
-            m_game_state.enemies[i].update(delta_time, m_game_state.player, NULL, 0, m_game_state.map);
-        }
-    }
+    
     
     for (int i = 0; i < PROJECTILE_COUNT; i++) {
         if (m_game_state.player_projectiles[i].isActive()){
 //            std::cout << &m_game_state.player_projectiles[i] << std::endl;
 //            std::cout << m_game_state.player_projectiles[i].get_entity_type() << std::endl;
-            m_game_state.player_projectiles[i].update(delta_time, NULL, m_game_state.enemies, ENEMY_COUNT, m_game_state.map);
+            m_game_state.player_projectiles[i].update(delta_time, NULL, m_game_state.enemies, ENEMY_COUNT, NULL);
+        }
+    }
+
+    for (int i = 0; i < ENEMY_COUNT; i++)
+    {
+        if (m_game_state.enemies[i].isActive()){
+            m_game_state.enemies[i].update(delta_time, m_game_state.player, NULL, 0, NULL);
         }
     }
 

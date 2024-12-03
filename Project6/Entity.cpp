@@ -17,8 +17,14 @@
 void Entity::projectile_activate(Entity *collideable_entities, int collidable_entity_count) {
     int collsion_x = check_collision_x(collideable_entities, collidable_entity_count);
     int collsion_y = check_collision_y(collideable_entities, collidable_entity_count);
+//    for (int i = 0; i < collidable_entity_count; i++) {
+//        std::cout << collideable_entities[i].get_position().x << std::endl;
+//    }
+    std::cout << collsion_x << std::endl;
+//    std::cout << get_position().x << std::endl;
 
     if (collsion_x != collidable_entity_count + 1 || collsion_y != collidable_entity_count + 1) {
+        std::cout << "collided" << std::endl;
         deactivate();
         collideable_entities[collsion_x].deactivate();
         collideable_entities[collsion_y].deactivate();
@@ -396,24 +402,12 @@ int Entity::update(float delta_time, Entity *player, Entity *collidable_entities
     
     m_position.y += m_velocity.y * delta_time;
     
-    int collidedObjectY = check_collision_y(collidable_entities, collidable_entity_count);
-
     if (map != NULL){
         check_collision_y(map);
     }
     m_position.x += m_velocity.x * delta_time;
-    int collidedObjectX = check_collision_x(collidable_entities, collidable_entity_count);
     if (map != NULL){
         check_collision_x(map);
-    }
-    
-    
-    if ((collidedObjectX != collidable_entity_count + 1 || collidedObjectY != collidable_entity_count + 1) && m_current_animation == ATTACK) {
-        collidable_entities[collidedObjectX].deactivate();
-        collidable_entities[collidedObjectY].deactivate();
-    }
-    else if((collidedObjectX != collidable_entity_count + 1 || collidedObjectY != collidable_entity_count + 1) && m_current_animation != ATTACK) {
-        return 1;
     }
 
     if (m_entity_type == ENEMY) ai_activate(player, delta_time);
