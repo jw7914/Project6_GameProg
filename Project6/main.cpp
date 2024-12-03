@@ -78,7 +78,6 @@ float g_previous_ticks = 0.0f;
 float g_accumulator = 0.0f;
 
 bool g_is_colliding_bottom = false;
-bool attacking = false;
 
 // ––––– GENERAL FUNCTIONS ––––– //
 void switch_to_scene(Scene *scene)
@@ -175,6 +174,23 @@ void process_input()
                         case SDLK_RETURN:
                             if (g_current_scene == g_levels[3])
                                 switch_to_scene(g_levels[0]);
+                            break;
+                        
+                        case SDLK_a:
+                            if (!g_current_scene->get_state().lose){
+                                g_current_scene->get_state().player->set_animation_state(DEFAULT);
+                                g_current_scene->get_state().player->set_animation_frames(0);
+                                glm::vec3 player_pos = g_current_scene->get_state().player->get_position();
+                                for(int i = 0; i < g_current_scene->get_state().num_player_projectiles; i++) {
+                                    if (!g_current_scene->get_state().player_projectiles[i].isActive()){
+                                        g_current_scene->get_state().player_projectiles[i].set_position(glm::vec3(player_pos.x + 0.5f, player_pos.y, 0.0f));
+                                        //                    std::cout << &g_current_scene->get_state().player_projectiles[i] << std::endl;
+                                        g_current_scene->get_state().player_projectiles[i].activate();
+                                        break;
+                                    }
+                                }
+                            }
+                            
                             
                         default:
                             break;
@@ -187,17 +203,11 @@ void process_input()
         
     
         const Uint8 *key_state = SDL_GetKeyboardState(NULL);
-        
+    for(int i = 0; i < g_current_scene->get_state().num_player_projectiles; i++) {
+        std::cout << i << ": " << g_current_scene->get_state().player_projectiles[i].isActive() << std::endl;
+
+    }
     if (!g_current_scene->get_state().lose){
-        if (key_state[SDL_SCANCODE_A]) {
-            g_current_scene->get_state().player->set_animation_state(ATTACK);
-            std::cout << g_current_scene->get_state().player->get_curr_animation() << std::endl;
-            attacking = true;
-        }
-        else {
-            attacking = false;
-        }
-        
         if (g_current_scene->get_state().won) {
             if (key_state[SDL_SCANCODE_LEFT]) {
                 if (g_current_scene->get_state().player->get_position().x > 0.0) {
@@ -217,7 +227,6 @@ void process_input()
                 g_current_scene->get_state().player->move_down();
             }
         }
-        
         
         
         if (glm::length( g_current_scene->get_state().player->get_movement()) > 1.0f)
@@ -250,7 +259,12 @@ void update()
 //        if (g_is_colliding_bottom == false && g_current_scene->get_state().player->get_collided_bottom()) g_effects->start(SHAKE, 1.0f);
         
         g_is_colliding_bottom = g_current_scene->get_state().player->get_collided_bottom();
-        
+        if (g_current_scene->get_state().player->get_position().y <= -7.0) {
+            g_current_scene->get_state().player->set_acceleration(glm::vec3(0.0f,0.0f,0.f));
+        }
+        else {
+            g_current_scene->get_state().player->set_acceleration(glm::vec3(0.0f, -20.0f, 0.0f));
+        }
         delta_time -= FIXED_TIMESTEP;
     }
     
@@ -265,12 +279,12 @@ void update()
     }
     
     
-    if (g_current_scene == g_levelA && g_current_scene->get_state().player->get_position().y < -10.0f) {
+    if (g_current_scene == g_levelA && g_current_scene->get_state().player->get_position().x > 10.0f) {
         int currLives = g_current_scene->get_state().lives;
         switch_to_scene(g_levelB);
         g_current_scene->set_number_of_lives(currLives);
     }
-    if (g_current_scene == g_levelB && g_current_scene->get_state().player->get_position().y < -10.0f){
+    if (g_current_scene == g_levelB && g_current_scene->get_state().player->get_position().x > 10.0f){
         int currLives = g_current_scene->get_state().lives;
         switch_to_scene(g_levelC);
         g_current_scene->set_number_of_lives(currLives);

@@ -5,7 +5,7 @@
 #include "glm/glm.hpp"
 #include "ShaderProgram.h"
 
-enum EntityType { PLATFORM, PLAYER, ENEMY  };
+enum EntityType { PROJECTILE, PLAYER, ENEMY  };
 enum AIType   { PATROL, JUMPING, WALKING, IDLE };
 enum Animation { DEFAULT, ATTACK, DEATH, RUN, DAMAGE };
 
@@ -89,6 +89,7 @@ public:
     void render(ShaderProgram* program);
 
     void ai_activate(Entity *player, float delta_time);
+    void projectile_activate(Entity *collideable_entities, int collidable_entity_count);
     void ai_walk();
     void ai_guard(Entity *player);
 

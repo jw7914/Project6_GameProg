@@ -7,6 +7,8 @@
 constexpr char ENEMY1_FILEPATH[]       = "devil.png";
 constexpr char ENEMY2_FILEPATH[]       = "witch.png";
 constexpr char ENEMY3_FILEPATH[]       = "mummy.png";
+constexpr char PROJECTILE_FILEPATH[]       = "arrow.png";
+
 
 
 unsigned int LEVELA_DATA[] =
@@ -40,6 +42,7 @@ LevelA::~LevelA()
     delete    m_game_state.player;
     delete    m_game_state.map;
     delete [] m_game_state.background;
+    delete [] m_game_state.player_projectiles;
     Mix_FreeChunk(m_game_state.jump_sfx);
     Mix_FreeMusic(m_game_state.bgm);
 }
@@ -63,8 +66,8 @@ void LevelA::initialise()
         {2, 2, 2}     // ATTACK animations
     };
     
-//    glm::vec3 acceleration = glm::vec3(0.0f, -4.81f, 0.0f);
-    glm::vec3 acceleration = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 acceleration = glm::vec3(0.0f, -20.0f, 0.0f);
+//    glm::vec3 acceleration = glm::vec3(0.0f, 0.0f, 0.0f);
 
         
     m_game_state.player =  new Entity(
@@ -87,7 +90,19 @@ void LevelA::initialise()
     m_game_state.player->set_position(glm::vec3(1.0f, -3.0f, 0.0f));
 
     // Jumping
+    GLuint arrow_texture_id = Utility::load_texture(PROJECTILE_FILEPATH);
     m_game_state.player->set_jumping_power(3.0f);
+    m_game_state.num_player_projectiles = PROJECTILE_COUNT;
+    m_game_state.player_projectiles = new Entity[PROJECTILE_COUNT];
+    for (int i = 0; i < PROJECTILE_COUNT; i++) {
+        m_game_state.player_projectiles[i] =  Entity();
+        m_game_state.player_projectiles[i].set_texture_id(arrow_texture_id);
+        m_game_state.player_projectiles[i].set_entity_type(PROJECTILE);
+        m_game_state.player_projectiles[i].set_scale(glm::vec3(1.0f,1.0f,0.0f));
+        m_game_state.player_projectiles[i].deactivate();
+        m_game_state.player_projectiles[i].set_speed(1.0f);
+        m_game_state.player_projectiles[i].set_movement(glm::vec3(0.0f));
+    }
     
     /**
     Enemies' stuff */
@@ -105,12 +120,12 @@ void LevelA::initialise()
         m_game_state.enemies[i] =  Entity(enemy_texture_ids[i], 0.0f, 1.0f, 1.0f, ENEMY, PATROL);
         m_game_state.enemies[i].set_scale(glm::vec3(1.0f,1.0f,0.0f));
         m_game_state.enemies[i].set_movement(glm::vec3(0.0f));
-        m_game_state.enemies[i].set_acceleration(glm::vec3(0.0f, -9.81f, 0.0f));
+        m_game_state.enemies[i].set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
         m_game_state.enemies[i].activate();
         m_game_state.enemies[i].set_entity_type(ENEMY);
         m_game_state.enemies[i].set_speed(1.0f);
         m_game_state.enemies[i].set_ai_type(PATROL);
-        m_game_state.enemies[i].set_position(glm::vec3(6.0f + (i * multiplierX), -5.0f + (i* multiplierY), 0.0f));
+        m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), -5.0f + (i* multiplierY), 0.0f));
     }
     
     GLuint heart_texture_id = Utility::load_texture("heart.png");
@@ -195,8 +210,21 @@ void LevelA::update(float delta_time)
 
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
-        m_game_state.enemies[i].update(delta_time, m_game_state.player, NULL, 0, m_game_state.map);
+        if (m_game_state.enemies[i].isActive()){
+            m_game_state.enemies[i].update(delta_time, m_game_state.player, NULL, 0, m_game_state.map);
+        }
     }
+    
+    for (int i = 0; i < PROJECTILE_COUNT; i++) {
+        if (m_game_state.player_projectiles[i].isActive()){
+//            std::cout << &m_game_state.player_projectiles[i] << std::endl;
+//            std::cout << m_game_state.player_projectiles[i].get_entity_type() << std::endl;
+            m_game_state.player_projectiles[i].update(delta_time, NULL, m_game_state.enemies, ENEMY_COUNT, m_game_state.map);
+        }
+    }
+
+    
+    
     
     if (m_game_state.player->get_position().y < -10.0f) m_game_state.next_scene_id = 1;
 }
@@ -208,6 +236,10 @@ void LevelA::render(ShaderProgram *program)
     }
     int num_active = ENEMY_COUNT;
     m_game_state.map->render(program);
+    for (int i = 0; i < m_game_state.lives; i++) {
+        m_game_state.hearts[i].render(program);
+    }
+    
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
         if (m_game_state.enemies[i].isActive()){
@@ -217,9 +249,13 @@ void LevelA::render(ShaderProgram *program)
             num_active -= 1;
         }
     }
-    for (int i = 0; i < m_game_state.lives; i++) {
-        m_game_state.hearts[i].render(program);
+    
+    for (int i = 0; i < PROJECTILE_COUNT; i++) {
+        if (m_game_state.player_projectiles[i].isActive()){
+            m_game_state.player_projectiles[i].render(program);
+        }
     }
+
     
     if (m_game_state.lose) {
         GLuint g_font_texture_id = Utility::load_texture("font1.png");

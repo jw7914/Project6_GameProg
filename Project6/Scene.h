@@ -27,7 +27,9 @@ struct GameState
     Entity *enemies;
     Entity *hearts;
     Entity *background;
-    Entity *projectiles;
+    Entity *player_projectiles;
+    Entity *enemy_projectiles;
+
     
     // ————— AUDIO ————— //
     Mix_Music *bgm;
@@ -40,6 +42,7 @@ struct GameState
     bool death = false;
     bool won = false;
     bool lose = false;
+    int num_player_projectiles;
 };
 
 class Scene {

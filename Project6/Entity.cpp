@@ -13,6 +13,22 @@
 #include "ShaderProgram.h"
 #include "Entity.h"
 
+
+void Entity::projectile_activate(Entity *collideable_entities, int collidable_entity_count) {
+    int collsion_x = check_collision_x(collideable_entities, collidable_entity_count);
+    int collsion_y = check_collision_y(collideable_entities, collidable_entity_count);
+
+    if (collsion_x != collidable_entity_count + 1 || collsion_y != collidable_entity_count + 1) {
+        deactivate();
+        collideable_entities[collsion_x].deactivate();
+        collideable_entities[collsion_y].deactivate();
+    }
+    if (get_position().x > 10.0f) {
+        deactivate();
+    }
+    m_movement = glm::vec3(1.0f,0.0f,0.0f);
+}
+
 void Entity::ai_activate(Entity *player, float delta_time)
 {
 
@@ -45,7 +61,7 @@ void Entity::ai_activate(Entity *player, float delta_time)
         }
     }
     if (m_ai_type == IDLE) {
-        m_movement = glm::vec3(0.0f, 0.0f, 0.0f);
+        m_movement = glm::vec3(1.0f, 0.0f, 0.0f);
     }
 }
 
@@ -401,7 +417,9 @@ int Entity::update(float delta_time, Entity *player, Entity *collidable_entities
     }
 
     if (m_entity_type == ENEMY) ai_activate(player, delta_time);
-    
+    if (m_entity_type ==  PROJECTILE){
+        projectile_activate(collidable_entities, collidable_entity_count);
+    }
     if (m_is_jumping)
     {
         m_is_jumping = false;
