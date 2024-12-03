@@ -402,6 +402,7 @@ int Entity::update(float delta_time, Entity *player, Entity *collidable_entities
     
     m_position.y += m_velocity.y * delta_time;
     
+    
     if (map != NULL){
         check_collision_y(map);
     }
@@ -409,10 +410,22 @@ int Entity::update(float delta_time, Entity *player, Entity *collidable_entities
     if (map != NULL){
         check_collision_x(map);
     }
-
+    
+   
     if (m_entity_type == ENEMY) ai_activate(player, delta_time);
-    if (m_entity_type ==  PROJECTILE){
+    else if (m_entity_type ==  PROJECTILE){
         projectile_activate(collidable_entities, collidable_entity_count);
+    }
+    else if (m_entity_type == PLAYER) {
+        int collidedObjectY = check_collision_y(collidable_entities, collidable_entity_count);
+        int collidedObjectX = check_collision_x(collidable_entities, collidable_entity_count);
+        if ((collidedObjectX != collidable_entity_count + 1 || collidedObjectY != collidable_entity_count + 1) && m_current_animation == ATTACK) {
+            collidable_entities[collidedObjectX].deactivate();
+            collidable_entities[collidedObjectY].deactivate();
+        }
+        else if((collidedObjectX != collidable_entity_count + 1 || collidedObjectY != collidable_entity_count + 1) && m_current_animation != ATTACK) {
+            return 1;
+        }
     }
     if (m_is_jumping)
     {
