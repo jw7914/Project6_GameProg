@@ -1,5 +1,7 @@
 #include "LevelA.h"
 #include "Utility.h"
+#include <cstdlib>
+#include <ctime>
 
 #define LEVEL_WIDTH 14
 #define LEVEL_HEIGHT 8
@@ -86,7 +88,9 @@ void LevelA::initialise()
         m_game_state.player_projectiles[i] =  Entity();
         m_game_state.player_projectiles[i].set_texture_id(arrow_texture_id);
         m_game_state.player_projectiles[i].set_entity_type(PROJECTILE);
-        m_game_state.player_projectiles[i].set_scale(glm::vec3(1.0f,1.0f,0.0f));
+        m_game_state.player_projectiles[i].set_scale(glm::vec3(0.5f,0.5f,0.0f));
+        m_game_state.player_projectiles[i].set_width(0.5f);
+        m_game_state.player_projectiles[i].set_height(0.5f);
         m_game_state.player_projectiles[i].set_position(m_game_state.player->get_position());
         m_game_state.player_projectiles[i].deactivate();
         m_game_state.player_projectiles[i].set_speed(1.0f);
@@ -101,12 +105,12 @@ void LevelA::initialise()
         Utility::load_texture(ENEMY3_FILEPATH)};
 
     m_game_state.enemies = new Entity[ENEMY_COUNT];
-
-    int multiplierX = 5;
-    int multiplierY = 2;
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+   
+    int multiplierX = 2;
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
-        m_game_state.enemies[i] =  Entity(enemy_texture_ids[i], 0.0f, 1.0f, 1.0f, ENEMY, PATROL);
+        m_game_state.enemies[i] =  Entity(enemy_texture_ids[i % 3], 0.0f, 1.0f, 1.0f, ENEMY, PATROL);
         m_game_state.enemies[i].set_scale(glm::vec3(1.0f,1.0f,0.0f));
         m_game_state.enemies[i].set_movement(glm::vec3(0.0f));
         m_game_state.enemies[i].set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -114,7 +118,9 @@ void LevelA::initialise()
         m_game_state.enemies[i].set_entity_type(ENEMY);
         m_game_state.enemies[i].set_speed(1.0f);
         m_game_state.enemies[i].set_ai_type(PATROL);
-        m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), -5.0f + (i* multiplierY), 0.0f));
+        float randomY = -5.0f + static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * (1.0f - (-5.0f));
+        std::cout << randomY << std::endl;
+        m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), randomY - 2, 0.0f));
     }
     
     GLuint heart_texture_id = Utility::load_texture("heart.png");
@@ -190,7 +196,6 @@ void LevelA::update(float delta_time)
     }
     
     
-    glm::vec3 player_pos = m_game_state.player->get_position();
     for (int i = 0; i < 3; i++) {
         float spacing = 0.5f;
         m_game_state.hearts[i].set_position(glm::vec3((8.5f + i * spacing), -0.25f, 0.0f));
@@ -200,15 +205,13 @@ void LevelA::update(float delta_time)
     
     for (int i = 0; i < PROJECTILE_COUNT; i++) {
         if (m_game_state.player_projectiles[i].isActive()){
-//            std::cout << &m_game_state.player_projectiles[i] << std::endl;
-//            std::cout << m_game_state.player_projectiles[i].get_entity_type() << std::endl;
             m_game_state.player_projectiles[i].update(delta_time, NULL, m_game_state.enemies, ENEMY_COUNT, NULL);
         }
     }
 
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
-        if (m_game_state.enemies[i].isActive()){
+        if (m_game_state.enemies[i].isActive() && !m_game_state.lose){
             m_game_state.enemies[i].update(delta_time, m_game_state.player, NULL, 0, NULL);
         }
     }
@@ -216,7 +219,7 @@ void LevelA::update(float delta_time)
     
     
     
-    if (m_game_state.player->get_position().y < -10.0f) m_game_state.next_scene_id = 1;
+    if (m_game_state.player->get_position().x > 10.0f) m_game_state.next_scene_id = 1;
 }
 
 void LevelA::render(ShaderProgram *program)
@@ -233,7 +236,9 @@ void LevelA::render(ShaderProgram *program)
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
         if (m_game_state.enemies[i].isActive()){
-            m_game_state.enemies[i].render(program);
+            if(!m_game_state.lose){
+                m_game_state.enemies[i].render(program);
+            }
         }
         else {
             num_active -= 1;

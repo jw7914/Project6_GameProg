@@ -12,7 +12,7 @@
 #define GL_GLEXT_PROTOTYPES 1
 #define FIXED_TIMESTEP 0.0166666f
 #define LEFT_EDGE 5.0f
-#define RIGHT_EDGE 13.0f
+#define RIGHT_EDGE 5.0f
 
 
 #ifdef _WINDOWS
@@ -272,12 +272,18 @@ void update()
     
     // Prevent the camera from showing anything outside of the "edge" of the level
     g_view_matrix = glm::mat4(1.0f);
-    if (g_current_scene->get_state().player->get_position().x > LEFT_EDGE) {
+    if (g_current_scene->get_state().player->get_position().x >= LEFT_EDGE && g_current_scene->get_state().player->get_position().x <= RIGHT_EDGE) {
+        // Player is within bounds
         g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-g_current_scene->get_state().player->get_position().x, 3.75, 0));
-    } else {
-        g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-5, 3.75, 0));
+    } else if (g_current_scene->get_state().player->get_position().x > RIGHT_EDGE) {
+        // Player is beyond the RIGHT_EDGE
+        g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-RIGHT_EDGE, 3.75, 0));
+    } else if (g_current_scene->get_state().player->get_position().x < LEFT_EDGE) {
+        // Player is beyond the LEFT_EDGE
+        g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-LEFT_EDGE, 3.75, 0));
     }
-    
+
+   
     
     if (g_current_scene == g_levelA && g_current_scene->get_state().player->get_position().x > 10.0f) {
         int currLives = g_current_scene->get_state().lives;

@@ -17,14 +17,8 @@
 void Entity::projectile_activate(Entity *collideable_entities, int collidable_entity_count) {
     int collsion_x = check_collision_x(collideable_entities, collidable_entity_count);
     int collsion_y = check_collision_y(collideable_entities, collidable_entity_count);
-//    for (int i = 0; i < collidable_entity_count; i++) {
-//        std::cout << collideable_entities[i].get_position().x << std::endl;
-//    }
-    std::cout << collsion_x << std::endl;
-//    std::cout << get_position().x << std::endl;
 
     if (collsion_x != collidable_entity_count + 1 || collsion_y != collidable_entity_count + 1) {
-        std::cout << "collided" << std::endl;
         deactivate();
         collideable_entities[collsion_x].deactivate();
         collideable_entities[collsion_y].deactivate();
@@ -32,14 +26,14 @@ void Entity::projectile_activate(Entity *collideable_entities, int collidable_en
     if (get_position().x > 10.0f) {
         deactivate();
     }
-    m_movement = glm::vec3(1.0f,0.0f,0.0f);
+    m_movement = glm::vec3(5.0f,0.0f,0.0f);
 }
 
 void Entity::ai_activate(Entity *player, float delta_time)
 {
 
     if (m_ai_type == PATROL){
-        float movement = -1.0f;
+        float movement = -3.0f;
 
         m_movement = glm::vec3(movement, 0.0f, 0.0f);
             
