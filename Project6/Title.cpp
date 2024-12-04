@@ -34,6 +34,10 @@ Title::~Title()
     Mix_FreeMusic(m_game_state.bgm);
 }
 
+void Title::reset() {
+    
+}
+
 void Title::initialise()
 {
     m_game_state.next_scene_id = -1;

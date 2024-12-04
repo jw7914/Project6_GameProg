@@ -37,6 +37,25 @@ LevelB::~LevelB()
     Mix_FreeMusic(m_game_state.bgm);
 }
 
+void LevelB::reset()
+{
+    m_game_state.player->set_position(glm::vec3(1.0f, -3.0f, 0.0f));
+    
+    for (int i = 0; i < PROJECTILE_COUNT; i++) {
+        m_game_state.player_projectiles[i].set_position(m_game_state.player->get_position());
+        m_game_state.player_projectiles[i].deactivate();
+    }
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+   
+    int multiplierX = 2;
+    for (int i = 0; i < ENEMY_COUNT; i++)
+    {
+        float randomY = -5.0f + static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * (1.0f - (-5.0f));
+        m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), randomY - 2, 0.0f));
+        m_game_state.enemies[i].activate();
+    }
+}
+
 void LevelB::initialise()
 {
     m_game_state.next_scene_id = -1;
@@ -182,7 +201,7 @@ void LevelB::update(float delta_time)
     }
     
     if (m_game_state.reset) {
-        initialise();
+        reset();
         m_game_state.reset = false;
     }
     

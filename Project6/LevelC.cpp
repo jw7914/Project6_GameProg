@@ -18,6 +18,25 @@ unsigned int LEVELC_DATA[] =
     16, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20
 };
 
+void LevelC::reset()
+{
+    m_game_state.player->set_position(glm::vec3(1.0f, -3.0f, 0.0f));
+    
+    for (int i = 0; i < PROJECTILE_COUNT; i++) {
+        m_game_state.player_projectiles[i].set_position(m_game_state.player->get_position());
+        m_game_state.player_projectiles[i].deactivate();
+    }
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+   
+    int multiplierX = 2;
+    for (int i = 0; i < ENEMY_COUNT; i++)
+    {
+        float randomY = -5.0f + static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * (1.0f - (-5.0f));
+        m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), randomY - 2, 0.0f));
+        m_game_state.enemies[i].activate();
+    }
+}
+
 LevelC::~LevelC()
 {
     delete [] m_game_state.enemies;

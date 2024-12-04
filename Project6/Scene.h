@@ -58,6 +58,8 @@ public:
     virtual void initialise() = 0;
     virtual void update(float delta_time) = 0;
     virtual void render(ShaderProgram *program) = 0;
+    virtual void reset() = 0;
+
     
     // ————— GETTERS ————— //
     GameState const get_state() const { return m_game_state;             }
