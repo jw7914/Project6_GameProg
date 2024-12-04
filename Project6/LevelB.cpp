@@ -6,9 +6,9 @@
 #define LEVEL_WIDTH 14
 #define LEVEL_HEIGHT 8
 
-constexpr char ENEMY1_FILEPATH[]       = "devil.png";
-constexpr char ENEMY2_FILEPATH[]       = "witch.png";
-constexpr char ENEMY3_FILEPATH[]       = "mummy.png";
+constexpr char ENEMY1_FILEPATH[]       = "vampire.png";
+constexpr char ENEMY2_FILEPATH[]       = "skeleton.png";
+constexpr char ENEMY3_FILEPATH[]       = "eyeball.png";
 constexpr char PROJECTILE_FILEPATH[]       = "arrow.png";
 
 
@@ -130,20 +130,13 @@ void LevelB::initialise()
         m_game_state.hearts[i].set_scale(glm::vec3(0.5f,0.5f,0.0f));
     }
     
-    m_game_state.background = new Entity[2];
-    GLuint background1_texture_id = Utility::load_texture("Background_0.png");
-    GLuint background2_texture_id = Utility::load_texture("Background_1.png");
+    m_game_state.background = new Entity[1];
+    GLuint background1_texture_id = Utility::load_texture("castle_background.png");
     m_game_state.background[0] = Entity();
     m_game_state.background[0].set_texture_id(background1_texture_id);
     m_game_state.background[0].set_scale(glm::vec3(10.0f, 8.0f, 0.0f));
     m_game_state.background[0].set_position(glm::vec3(5.0f, -4.0f, 0.0f));
     m_game_state.background[0].update(0.0f, NULL, NULL, 0, NULL);
-
-    m_game_state.background[1] = Entity();
-    m_game_state.background[1].set_texture_id(background2_texture_id);
-    m_game_state.background[1].set_scale(glm::vec3(10.0f, 8.0f, 0.0f));
-    m_game_state.background[1].set_position(glm::vec3(5.0f, -4.0f, 0.0f));
-    m_game_state.background[1].update(0.0f, NULL, NULL, 0, NULL);
 
     
     /**
@@ -254,6 +247,9 @@ void LevelB::render(ShaderProgram *program)
         GLuint g_font_texture_id = Utility::load_texture("font1.png");
         Utility::draw_text(program, g_font_texture_id, "Player Lose", 0.5f, 0.05f,
               glm::vec3(2.0f,-1.0f,0.0f));
+        Utility::draw_text(program, g_font_texture_id, "Press r to retry", 0.5f, 0.05f,
+              glm::vec3(1.0f,-2.0f,0.0f));
+
     }
     if (num_active == 0) {
         GLuint g_font_texture_id = Utility::load_texture("font1.png");

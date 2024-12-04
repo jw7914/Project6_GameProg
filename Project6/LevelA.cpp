@@ -6,7 +6,7 @@
 #define LEVEL_WIDTH 14
 #define LEVEL_HEIGHT 8
 
-constexpr char ENEMY1_FILEPATH[]       = "devil.png";
+constexpr char ENEMY1_FILEPATH[]       = "frankie.png";
 constexpr char ENEMY2_FILEPATH[]       = "witch.png";
 constexpr char ENEMY3_FILEPATH[]       = "mummy.png";
 constexpr char PROJECTILE_FILEPATH[]       = "arrow.png";
