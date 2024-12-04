@@ -65,8 +65,6 @@ void LevelB::initialise()
     
     // Code from main.cpp's initialise()
     std::vector<GLuint> player_texture_ids = {
-        Utility::load_texture("player.png"),   // IDLE spritesheet
-        Utility::load_texture("player.png"),
     };
 
     std::vector<std::vector<int>> player_animations = {

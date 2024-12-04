@@ -12,6 +12,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "ShaderProgram.h"
 #include "Entity.h"
+#include "Utility.h"
 
 
 void Entity::projectile_activate(Entity *collideable_entities, int collidable_entity_count) {
@@ -117,12 +118,7 @@ Entity::~Entity() { }
 
 void Entity::set_animation_state(Animation new_animation)
 {
-   // Check if we are leaving the ATTACK animation
-   if (m_prev_animation == ATTACK && new_animation != ATTACK) {
-       // Reset the position adjustment made during ATTACK
-       m_scale.x = m_scale.y;
-   }
-
+  
    // Update the current animation state
    m_current_animation = new_animation;
 
@@ -162,12 +158,18 @@ void Entity::set_animation_state(Animation new_animation)
            break;
    }
 
-   m_prev_animation = m_current_animation;
 }
 
 
 void Entity::draw_sprite_from_texture_atlas(ShaderProgram* program)
 {
+    m_texture_ids.clear();
+    m_texture_ids = {
+        Utility::load_texture("player.png"),   // IDLE spritesheet
+        Utility::load_texture("player.png"),
+        Utility::load_texture("player.png"),
+    };
+    std::cout << m_texture_ids.size() << std::endl;
    GLuint current_texture = m_texture_ids[m_current_animation];  // Get the right texture
 
    float u_coord = (float) (m_animation_index % m_animation_cols) / (float) m_animation_cols;
