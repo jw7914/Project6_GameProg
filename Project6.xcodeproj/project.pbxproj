@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BF3702822CFE84E000D0B0EE /* arrow.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF3702812CFE848400D0B0EE /* arrow.png */; };
+		BF3702852CFFD71E00D0B0EE /* castle_background.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF3702832CFFD6C300D0B0EE /* castle_background.png */; };
+		BF3702862CFFD71E00D0B0EE /* underworld_background.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF3702842CFFD6C300D0B0EE /* underworld_background.png */; };
 		BF41DB382CFD2DCE0081F250 /* LevelB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF41DB242CFD2DCE0081F250 /* LevelB.cpp */; };
 		BF41DB392CFD2DCE0081F250 /* LevelC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF41DB262CFD2DCE0081F250 /* LevelC.cpp */; };
 		BF41DB3A2CFD2DCE0081F250 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF41DB292CFD2DCE0081F250 /* Map.cpp */; };
@@ -56,6 +58,8 @@
 				BF41DB412CFD2DE80081F250 /* bounce.wav in CopyFiles */,
 				BF41DB7A2CFD6B570081F250 /* player.png in CopyFiles */,
 				BF41DB722CFD6B0A0081F250 /* mummy.png in CopyFiles */,
+				BF3702852CFFD71E00D0B0EE /* castle_background.png in CopyFiles */,
+				BF3702862CFFD71E00D0B0EE /* underworld_background.png in CopyFiles */,
 				BF3702822CFE84E000D0B0EE /* arrow.png in CopyFiles */,
 				BF41DB732CFD6B0A0081F250 /* frankie.png in CopyFiles */,
 				BF41DB742CFD6B0A0081F250 /* eyeball.png in CopyFiles */,
@@ -82,6 +86,8 @@
 
 /* Begin PBXFileReference section */
 		BF3702812CFE848400D0B0EE /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		BF3702832CFFD6C300D0B0EE /* castle_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = castle_background.png; sourceTree = "<group>"; };
+		BF3702842CFFD6C300D0B0EE /* underworld_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = underworld_background.png; sourceTree = "<group>"; };
 		BF41DB172CFD2DCE0081F250 /* bounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce.wav; sourceTree = "<group>"; };
 		BF41DB182CFD2DCE0081F250 /* dooblydoo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dooblydoo.mp3; sourceTree = "<group>"; };
 		BF41DB1C2CFD2DCE0081F250 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
@@ -199,6 +205,8 @@
 				BF41DB6E2CFD5B6C0081F250 /* skeleton.png */,
 				BF41DB6A2CFD596A0081F250 /* skull.png */,
 				BF41DB792CFD6B2E0081F250 /* player.png */,
+				BF3702832CFFD6C300D0B0EE /* castle_background.png */,
+				BF3702842CFFD6C300D0B0EE /* underworld_background.png */,
 				BF41DB512CFD31140081F250 /* Background_0.png */,
 				BF41DB652CFD4F490081F250 /* Background_1.png */,
 				BF41DB2F2CFD2DCE0081F250 /* new_tilemap.png */,

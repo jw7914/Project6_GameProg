@@ -39,9 +39,9 @@ struct GameState
     int next_scene_id;
     int lives = 3;
     bool reset = false;
-    bool death = false;
     bool won = false;
     bool lose = false;
+    bool death = false;
     int num_player_projectiles;
 };
 
@@ -65,5 +65,7 @@ public:
     
     // ————— SETTERS ————— //
     void const set_number_of_lives(int live) { m_game_state.lives = live ; }
+    void const set_win(bool win) { m_game_state.won = win ; }
+    void const set_lose(bool lose) { m_game_state.lose = lose ; }
 
 };

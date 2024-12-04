@@ -184,12 +184,24 @@ void process_input()
                                 for(int i = 0; i < g_current_scene->get_state().num_player_projectiles; i++) {
                                     if (!g_current_scene->get_state().player_projectiles[i].isActive()){
                                         g_current_scene->get_state().player_projectiles[i].set_position(glm::vec3(player_pos.x + 0.5f, player_pos.y, 0.0f));
-                                        //                    std::cout << &g_current_scene->get_state().player_projectiles[i] << std::endl;
                                         g_current_scene->get_state().player_projectiles[i].activate();
                                         break;
                                     }
                                 }
                             }
+                            break;
+                        case SDLK_r:
+                            if (g_current_scene->get_state().lose) {
+                                //Reset all variables in all levels
+                                for (int i = 0; i < 3; i ++) {
+                                    g_levels[i]->set_win(false);
+                                    g_levels[i]->set_lose(false);
+                                    
+                                }
+                                switch_to_scene(g_levelA);
+                                g_current_scene->set_number_of_lives(3);
+                            }
+                            break;
                             
                             
                         default:

@@ -41,7 +41,6 @@ void LevelA::initialise()
 {
     m_game_state.next_scene_id = -1;
     
-    
     GLuint map_texture_id = Utility::load_texture("new_tilemap.png");
     m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVELA_DATA, map_texture_id, 1.0f, 20, 9);
     
@@ -119,7 +118,6 @@ void LevelA::initialise()
         m_game_state.enemies[i].set_speed(1.0f);
         m_game_state.enemies[i].set_ai_type(PATROL);
         float randomY = -5.0f + static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * (1.0f - (-5.0f));
-        std::cout << randomY << std::endl;
         m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), randomY - 2, 0.0f));
     }
     
@@ -256,6 +254,8 @@ void LevelA::render(ShaderProgram *program)
         GLuint g_font_texture_id = Utility::load_texture("font1.png");
         Utility::draw_text(program, g_font_texture_id, "Player Lose", 0.5f, 0.05f,
               glm::vec3(2.0f,-1.0f,0.0f));
+        Utility::draw_text(program, g_font_texture_id, "Press r to retry", 0.5f, 0.05f,
+              glm::vec3(1.0f,-2.0f,0.0f));
     }
     if (num_active == 0) {
         GLuint g_font_texture_id = Utility::load_texture("font1.png");
