@@ -86,14 +86,14 @@ void Title::initialise()
 
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
-        m_game_state.enemies[i] =  Entity(enemy_texture_id, 0.0f, 1.0f, 1.0f, ENEMY, PATROL);
+        m_game_state.enemies[i] =  Entity(enemy_texture_id, 0.0f, 1.0f, 1.0f, ENEMY, EASY);
         m_game_state.enemies[i].set_scale(glm::vec3(1.0f,1.0f,0.0f));
         m_game_state.enemies[i].set_movement(glm::vec3(0.0f));
         m_game_state.enemies[i].set_acceleration(glm::vec3(0.0f, -9.81f, 0.0f));
         m_game_state.enemies[i].activate();
         m_game_state.enemies[i].set_entity_type(ENEMY);
         m_game_state.enemies[i].set_speed(1.0f);
-        m_game_state.enemies[i].set_ai_type(PATROL);
+        m_game_state.enemies[i].set_ai_type(EASY);
         m_game_state.enemies[i].set_position(glm::vec3(6.0f, -3.0f, 0.0f));
         m_game_state.enemies[i].deactivate();
     }

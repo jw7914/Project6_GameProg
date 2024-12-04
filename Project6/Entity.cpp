@@ -32,7 +32,7 @@ void Entity::projectile_activate(Entity *collideable_entities, int collidable_en
 void Entity::ai_activate(Entity *player, float delta_time)
 {
 
-    if (m_ai_type == PATROL){
+    if (m_ai_type == EASY){
         float movement = -3.0f;
 
         m_movement = glm::vec3(movement, 0.0f, 0.0f);
@@ -41,13 +41,13 @@ void Entity::ai_activate(Entity *player, float delta_time)
             set_jumping_power(5.0f);
         }
     }
-    if (m_ai_type == JUMPING) {
+    if (m_ai_type == MEDIUM) {
         if (m_collided_bottom) {
             set_jumping_power(8.5f);
         }
     }
     
-    if (m_ai_type == WALKING) {
+    if (m_ai_type == HARD) {
         // Determine movement direction on the x-axis
         if (m_position.x > player->get_position().x) {
             m_movement.x = -1.0f;

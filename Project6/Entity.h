@@ -6,7 +6,7 @@
 #include "ShaderProgram.h"
 
 enum EntityType { PROJECTILE, PLAYER, ENEMY  };
-enum AIType   { PATROL, JUMPING, WALKING, IDLE };
+enum AIType   { EASY, MEDIUM, HARD, IDLE };
 enum Animation { DEFAULT, ATTACK, DEATH, RUN, DAMAGE };
 
 
