@@ -1,4 +1,5 @@
 #include "LevelA.h"
+#include <SDL_mixer.h>
 #include "Utility.h"
 #include <cstdlib>
 #include <ctime>
@@ -10,6 +11,7 @@ constexpr char ENEMY1_FILEPATH[]       = "frankie.png";
 constexpr char ENEMY2_FILEPATH[]       = "witch.png";
 constexpr char ENEMY3_FILEPATH[]       = "mummy.png";
 constexpr char PROJECTILE_FILEPATH[]       = "arrow.png";
+bool play = false;
 
 
 
@@ -33,7 +35,9 @@ LevelA::~LevelA()
     delete    m_game_state.map;
     delete [] m_game_state.background;
     delete [] m_game_state.player_projectiles;
-    Mix_FreeChunk(m_game_state.jump_sfx);
+    Mix_FreeChunk(m_game_state.levelclear_sfx);
+    Mix_FreeChunk(m_game_state.enemydeath_sfx);
+    Mix_FreeChunk(m_game_state.playerdeath_sfx);
     Mix_FreeMusic(m_game_state.bgm);
 }
 
@@ -172,7 +176,11 @@ void LevelA::initialise()
     Mix_PlayMusic(m_game_state.bgm, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2.0);
     
-    m_game_state.jump_sfx = Mix_LoadWAV("jump-3-236683.wav");
+    //SFXs need to be absolute paths
+    m_game_state.levelclear_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/level-completed-230568.wav");
+    m_game_state.enemydeath_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/8-bit-power-down-2-shortened.wav");
+    m_game_state.playerdeath_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/you-died.wav");
+
 }
 
 void LevelA::update(float delta_time)
@@ -185,6 +193,7 @@ void LevelA::update(float delta_time)
             m_game_state.lives -= 1;
             m_game_state.death = false;
             m_game_state.reset = true;
+            Mix_PlayChannel(-1, m_game_state.playerdeath_sfx, 0);
         }
         if (m_game_state.lives == 0) {
             m_game_state.lose = true;
@@ -199,6 +208,7 @@ void LevelA::update(float delta_time)
             m_game_state.lives -= 1;
             m_game_state.death = false;
             m_game_state.reset = true;
+            Mix_PlayChannel(-1, m_game_state.playerdeath_sfx, 0);
         }
         if (m_game_state.lives == 0) {
             m_game_state.lose = true;
@@ -220,7 +230,9 @@ void LevelA::update(float delta_time)
     
     for (int i = 0; i < PROJECTILE_COUNT; i++) {
         if (m_game_state.player_projectiles[i].isActive()){
-            m_game_state.player_projectiles[i].update(delta_time, NULL, m_game_state.enemies, ENEMY_COUNT, NULL);
+            if (m_game_state.player_projectiles[i].update(delta_time, NULL, m_game_state.enemies, ENEMY_COUNT, NULL) == 5) {
+                Mix_PlayChannel(-1, m_game_state.enemydeath_sfx, 0);
+            }
         }
     }
 
@@ -279,6 +291,10 @@ void LevelA::render(ShaderProgram *program)
         Utility::draw_text(program, g_font_texture_id, "Level Clear", 0.5f, 0.05f,
               glm::vec3(2.0f,-2.0f,0.0f));
         m_game_state.won = true;
+        if (!play){
+            Mix_PlayChannel(-1, m_game_state.levelclear_sfx, 0);
+            play = true;
+        }
     }
     
     m_game_state.player->render(program);

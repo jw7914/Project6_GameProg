@@ -15,19 +15,22 @@
 #include "Utility.h"
 
 
-void Entity::projectile_activate(Entity *collideable_entities, int collidable_entity_count) {
+int Entity::projectile_activate(Entity *collideable_entities, int collidable_entity_count) {
+    int flag = 0;
     int collsion_x = check_collision_x(collideable_entities, collidable_entity_count);
     int collsion_y = check_collision_y(collideable_entities, collidable_entity_count);
 
-    if (collsion_x != collidable_entity_count + 1 || collsion_y != collidable_entity_count + 1) {
-        deactivate();
-        collideable_entities[collsion_x].deactivate();
-        collideable_entities[collsion_y].deactivate();
-    }
     if (get_position().x > 10.0f) {
         deactivate();
     }
+    if (collsion_x != collidable_entity_count + 1 || collsion_y != collidable_entity_count + 1) {
+        collideable_entities[collsion_x].deactivate();
+        collideable_entities[collsion_y].deactivate();
+        deactivate();
+        flag = 1;
+    }
     m_movement = glm::vec3(5.0f,0.0f,0.0f);
+    return flag;
 }
 
 void Entity::ai_activate(Entity *player, float delta_time)
@@ -169,7 +172,6 @@ void Entity::draw_sprite_from_texture_atlas(ShaderProgram* program)
         Utility::load_texture("player.png"),
         Utility::load_texture("player.png"),
     };
-    std::cout << m_texture_ids.size() << std::endl;
    GLuint current_texture = m_texture_ids[m_current_animation];  // Get the right texture
 
    float u_coord = (float) (m_animation_index % m_animation_cols) / (float) m_animation_cols;
@@ -410,7 +412,10 @@ int Entity::update(float delta_time, Entity *player, Entity *collidable_entities
    
     if (m_entity_type == ENEMY) ai_activate(player, delta_time);
     else if (m_entity_type ==  PROJECTILE){
-        projectile_activate(collidable_entities, collidable_entity_count);
+        if (projectile_activate(collidable_entities, collidable_entity_count) == 1) {
+            return 5;
+            
+        }
     }
     else if (m_entity_type == PLAYER) {
         int collidedObjectY = check_collision_y(collidable_entities, collidable_entity_count);

@@ -33,7 +33,8 @@ LevelB::~LevelB()
     delete    m_game_state.map;
     delete [] m_game_state.background;
     delete [] m_game_state.player_projectiles;
-    Mix_FreeChunk(m_game_state.jump_sfx);
+    Mix_FreeChunk(m_game_state.levelclear_sfx);
+    Mix_FreeChunk(m_game_state.enemydeath_sfx);
     Mix_FreeMusic(m_game_state.bgm);
 }
 
@@ -165,7 +166,7 @@ void LevelB::initialise()
     Mix_PlayMusic(m_game_state.bgm, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2.0);
     
-    m_game_state.jump_sfx = Mix_LoadWAV("jump-3-236683.wav");
+    m_game_state.enemydeath_sfx = Mix_LoadWAV("jump-3-236683.wav");
 }
 
 void LevelB::update(float delta_time)

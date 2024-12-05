@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF315B102D01267000A9B5BD /* 8-bit-power-down-2-shortened.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B0F2D01266A00A9B5BD /* 8-bit-power-down-2-shortened.wav */; };
+		BF315B122D0126FA00A9B5BD /* victory-96688.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B112D0126F300A9B5BD /* victory-96688.wav */; };
+		BF315B162D01287600A9B5BD /* level-completed-230568.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B132D01285700A9B5BD /* level-completed-230568.wav */; };
+		BF315B172D01287600A9B5BD /* victory-96688 2.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B142D01285700A9B5BD /* victory-96688 2.wav */; };
+		BF315B182D01287600A9B5BD /* you-died.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B152D01285700A9B5BD /* you-died.wav */; };
 		BF3702822CFE84E000D0B0EE /* arrow.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF3702812CFE848400D0B0EE /* arrow.png */; };
 		BF3702852CFFD71E00D0B0EE /* castle_background.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF3702832CFFD6C300D0B0EE /* castle_background.png */; };
 		BF3702862CFFD71E00D0B0EE /* underworld_background.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF3702842CFFD6C300D0B0EE /* underworld_background.png */; };
@@ -19,16 +24,12 @@
 		BF41DB3E2CFD2DCE0081F250 /* LevelA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF41DB222CFD2DCE0081F250 /* LevelA.cpp */; };
 		BF41DB3F2CFD2DCE0081F250 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF41DB372CFD2DCE0081F250 /* Utility.cpp */; };
 		BF41DB402CFD2DCE0081F250 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF41DB1D2CFD2DCE0081F250 /* Entity.cpp */; };
-		BF41DB412CFD2DE80081F250 /* bounce.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB172CFD2DCE0081F250 /* bounce.wav */; };
 		BF41DB422CFD2DE80081F250 /* dooblydoo.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB182CFD2DCE0081F250 /* dooblydoo.mp3 */; };
 		BF41DB462CFD2DE80081F250 /* font1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB1E2CFD2DCE0081F250 /* font1.png */; };
 		BF41DB472CFD2DE80081F250 /* galactic.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB1F2CFD2DCE0081F250 /* galactic.mp3 */; };
 		BF41DB482CFD2DE80081F250 /* heart.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB202CFD2DCE0081F250 /* heart.png */; };
 		BF41DB4E2CFD2DE80081F250 /* new_tilemap.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB2F2CFD2DCE0081F250 /* new_tilemap.png */; };
-		BF41DB4F2CFD2DE80081F250 /* retro-jump-3-236683.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB302CFD2DCE0081F250 /* retro-jump-3-236683.wav */; };
-		BF41DB502CFD2DE80081F250 /* tileset.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB332CFD2DCE0081F250 /* tileset.png */; };
 		BF41DB522CFD311A0081F250 /* Background_0.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB512CFD31140081F250 /* Background_0.png */; };
-		BF41DB572CFD439F0081F250 /* player_animations.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB562CFD42760081F250 /* player_animations.png */; };
 		BF41DB662CFD507E0081F250 /* Background_1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB652CFD4F490081F250 /* Background_1.png */; };
 		BF41DB692CFD58C20081F250 /* devil.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB682CFD58A20081F250 /* devil.png */; };
 		BF41DB722CFD6B0A0081F250 /* mummy.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF41DB6F2CFD5BA20081F250 /* mummy.png */; };
@@ -55,7 +56,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				BF41DB412CFD2DE80081F250 /* bounce.wav in CopyFiles */,
+				BF315B122D0126FA00A9B5BD /* victory-96688.wav in CopyFiles */,
+				BF315B162D01287600A9B5BD /* level-completed-230568.wav in CopyFiles */,
+				BF315B172D01287600A9B5BD /* victory-96688 2.wav in CopyFiles */,
+				BF315B182D01287600A9B5BD /* you-died.wav in CopyFiles */,
+				BF315B102D01267000A9B5BD /* 8-bit-power-down-2-shortened.wav in CopyFiles */,
 				BF41DB7A2CFD6B570081F250 /* player.png in CopyFiles */,
 				BF41DB722CFD6B0A0081F250 /* mummy.png in CopyFiles */,
 				BF3702852CFFD71E00D0B0EE /* castle_background.png in CopyFiles */,
@@ -70,14 +75,11 @@
 				BF41DB782CFD6B0B0081F250 /* skull.png in CopyFiles */,
 				BF41DB422CFD2DE80081F250 /* dooblydoo.mp3 in CopyFiles */,
 				BF41DB662CFD507E0081F250 /* Background_1.png in CopyFiles */,
-				BF41DB572CFD439F0081F250 /* player_animations.png in CopyFiles */,
 				BF41DB522CFD311A0081F250 /* Background_0.png in CopyFiles */,
 				BF41DB462CFD2DE80081F250 /* font1.png in CopyFiles */,
 				BF41DB472CFD2DE80081F250 /* galactic.mp3 in CopyFiles */,
 				BF41DB482CFD2DE80081F250 /* heart.png in CopyFiles */,
 				BF41DB4E2CFD2DE80081F250 /* new_tilemap.png in CopyFiles */,
-				BF41DB4F2CFD2DE80081F250 /* retro-jump-3-236683.wav in CopyFiles */,
-				BF41DB502CFD2DE80081F250 /* tileset.png in CopyFiles */,
 				DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,10 +87,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BF315B0F2D01266A00A9B5BD /* 8-bit-power-down-2-shortened.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "8-bit-power-down-2-shortened.wav"; sourceTree = "<group>"; };
+		BF315B112D0126F300A9B5BD /* victory-96688.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "victory-96688.wav"; sourceTree = "<group>"; };
+		BF315B132D01285700A9B5BD /* level-completed-230568.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "level-completed-230568.wav"; sourceTree = "<group>"; };
+		BF315B142D01285700A9B5BD /* victory-96688 2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "victory-96688 2.wav"; sourceTree = "<group>"; };
+		BF315B152D01285700A9B5BD /* you-died.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "you-died.wav"; sourceTree = "<group>"; };
 		BF3702812CFE848400D0B0EE /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		BF3702832CFFD6C300D0B0EE /* castle_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = castle_background.png; sourceTree = "<group>"; };
 		BF3702842CFFD6C300D0B0EE /* underworld_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = underworld_background.png; sourceTree = "<group>"; };
-		BF41DB172CFD2DCE0081F250 /* bounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce.wav; sourceTree = "<group>"; };
 		BF41DB182CFD2DCE0081F250 /* dooblydoo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dooblydoo.mp3; sourceTree = "<group>"; };
 		BF41DB1C2CFD2DCE0081F250 /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
 		BF41DB1D2CFD2DCE0081F250 /* Entity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
@@ -105,16 +111,13 @@
 		BF41DB282CFD2DCE0081F250 /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
 		BF41DB292CFD2DCE0081F250 /* Map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
 		BF41DB2F2CFD2DCE0081F250 /* new_tilemap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new_tilemap.png; sourceTree = "<group>"; };
-		BF41DB302CFD2DCE0081F250 /* retro-jump-3-236683.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "retro-jump-3-236683.wav"; sourceTree = "<group>"; };
 		BF41DB312CFD2DCE0081F250 /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
 		BF41DB322CFD2DCE0081F250 /* Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
-		BF41DB332CFD2DCE0081F250 /* tileset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tileset.png; sourceTree = "<group>"; };
 		BF41DB342CFD2DCE0081F250 /* Title.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Title.h; sourceTree = "<group>"; };
 		BF41DB352CFD2DCE0081F250 /* Title.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Title.cpp; sourceTree = "<group>"; };
 		BF41DB362CFD2DCE0081F250 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		BF41DB372CFD2DCE0081F250 /* Utility.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Utility.cpp; sourceTree = "<group>"; };
 		BF41DB512CFD31140081F250 /* Background_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_0.png; sourceTree = "<group>"; };
-		BF41DB562CFD42760081F250 /* player_animations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player_animations.png; sourceTree = "<group>"; };
 		BF41DB652CFD4F490081F250 /* Background_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_1.png; sourceTree = "<group>"; };
 		BF41DB682CFD58A20081F250 /* devil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = devil.png; sourceTree = "<group>"; };
 		BF41DB6A2CFD596A0081F250 /* skull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skull.png; sourceTree = "<group>"; };
@@ -179,8 +182,12 @@
 				DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */,
 				DBDF1B5C2323DE8D007CECB1 /* shaders */,
 				DBDF1B5A2323DE8D007CECB1 /* stb_image.h */,
-				BF41DB172CFD2DCE0081F250 /* bounce.wav */,
+				BF315B132D01285700A9B5BD /* level-completed-230568.wav */,
+				BF315B142D01285700A9B5BD /* victory-96688 2.wav */,
+				BF315B152D01285700A9B5BD /* you-died.wav */,
+				BF315B0F2D01266A00A9B5BD /* 8-bit-power-down-2-shortened.wav */,
 				BF41DB182CFD2DCE0081F250 /* dooblydoo.mp3 */,
+				BF315B112D0126F300A9B5BD /* victory-96688.wav */,
 				BF41DB1C2CFD2DCE0081F250 /* Entity.h */,
 				BF41DB1D2CFD2DCE0081F250 /* Entity.cpp */,
 				BF41DB1E2CFD2DCE0081F250 /* font1.png */,
@@ -210,15 +217,12 @@
 				BF41DB512CFD31140081F250 /* Background_0.png */,
 				BF41DB652CFD4F490081F250 /* Background_1.png */,
 				BF41DB2F2CFD2DCE0081F250 /* new_tilemap.png */,
-				BF41DB302CFD2DCE0081F250 /* retro-jump-3-236683.wav */,
 				BF41DB312CFD2DCE0081F250 /* Scene.h */,
 				BF41DB322CFD2DCE0081F250 /* Scene.cpp */,
-				BF41DB332CFD2DCE0081F250 /* tileset.png */,
 				BF41DB342CFD2DCE0081F250 /* Title.h */,
 				BF41DB352CFD2DCE0081F250 /* Title.cpp */,
 				BF41DB362CFD2DCE0081F250 /* Utility.h */,
 				BF41DB372CFD2DCE0081F250 /* Utility.cpp */,
-				BF41DB562CFD42760081F250 /* player_animations.png */,
 			);
 			path = Project6;
 			sourceTree = "<group>";

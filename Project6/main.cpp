@@ -161,16 +161,6 @@ void process_input()
                             g_app_status = TERMINATED;
                             break;
                             
-                        case SDLK_SPACE:
-                            // Jump
-                            if (g_current_scene != g_levels[3]){
-                                if (g_current_scene->get_state().player->get_collided_bottom() && !g_current_scene->get_state().lose)
-                                {
-                                    g_current_scene->get_state().player->jump();
-                                    Mix_PlayChannel(-1, g_current_scene->get_state().jump_sfx, 0);
-                                }
-                            }
-                            break;
                         case SDLK_RETURN:
                             if (g_current_scene == g_levels[3])
                                 switch_to_scene(g_levels[0]);

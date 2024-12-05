@@ -30,7 +30,8 @@ Title::~Title()
     delete    m_game_state.player;
     delete    m_game_state.map;
     delete    m_game_state.background;
-    Mix_FreeChunk(m_game_state.jump_sfx);
+    Mix_FreeChunk(m_game_state.levelclear_sfx);
+    Mix_FreeChunk(m_game_state.enemydeath_sfx);
     Mix_FreeMusic(m_game_state.bgm);
 }
 
@@ -129,7 +130,7 @@ void Title::initialise()
     Mix_PlayMusic(m_game_state.bgm, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2.0);
     
-    m_game_state.jump_sfx = Mix_LoadWAV("bounce.wav");
+    m_game_state.enemydeath_sfx = Mix_LoadWAV("bounce.wav");
 }
 
 void Title::update(float delta_time)

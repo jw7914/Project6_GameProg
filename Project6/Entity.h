@@ -89,7 +89,7 @@ public:
     void render(ShaderProgram* program);
 
     void ai_activate(Entity *player, float delta_time);
-    void projectile_activate(Entity *collideable_entities, int collidable_entity_count);
+    int projectile_activate(Entity *collideable_entities, int collidable_entity_count);
     void ai_walk();
     void ai_guard(Entity *player);
 
