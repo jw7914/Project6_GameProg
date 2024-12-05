@@ -46,9 +46,9 @@ void Entity::ai_activate(Entity *player, float delta_time)
         }
     }
     if (m_ai_type == MEDIUM) {
-        if (m_collided_bottom) {
-            set_jumping_power(8.5f);
-        }
+        m_theta += 1.0f * delta_time;
+        float movement = glm::sin(m_theta) * 1.25f;
+        m_movement = glm::vec3(-3.0f, movement, 0.0f);
     }
     
     if (m_ai_type == HARD) {
