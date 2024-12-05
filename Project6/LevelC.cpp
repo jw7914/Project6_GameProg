@@ -6,10 +6,10 @@
 #define LEVEL_WIDTH 14
 #define LEVEL_HEIGHT 8
 
-constexpr char ENEMY1_FILEPATH[]       = "frankie.png";
-constexpr char ENEMY2_FILEPATH[]       = "witch.png";
-constexpr char ENEMY3_FILEPATH[]       = "mummy.png";
+constexpr char ENEMY1_FILEPATH[]       = "devil.png";
+constexpr char ENEMY2_FILEPATH[]       = "skull.png";
 constexpr char PROJECTILE_FILEPATH[]       = "arrow.png";
+bool levelC_played = false;
 
 
 
@@ -35,6 +35,7 @@ LevelC::~LevelC()
     delete [] m_game_state.player_projectiles;
     Mix_FreeChunk(m_game_state.levelclear_sfx);
     Mix_FreeChunk(m_game_state.enemydeath_sfx);
+    Mix_FreeChunk(m_game_state.playerdeath_sfx);
     Mix_FreeMusic(m_game_state.bgm);
 }
 
@@ -51,8 +52,8 @@ void LevelC::reset()
     int multiplierX = 2;
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
-        float randomY = -5.0f + static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * (1.0f - (-5.0f));
-        m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), randomY - 2, 0.0f));
+        float randomY = -2.0f + static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * (1.0f - (-2.0f));
+        m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), randomY - 4, 0.0f));
         m_game_state.enemies[i].activate();
     }
 }
@@ -119,24 +120,28 @@ void LevelC::initialise()
     std::vector<GLuint> enemy_texture_ids = {
         Utility::load_texture(ENEMY1_FILEPATH),
         Utility::load_texture(ENEMY2_FILEPATH),
-        Utility::load_texture(ENEMY3_FILEPATH)};
-
+    };
     m_game_state.enemies = new Entity[ENEMY_COUNT];
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
    
     int multiplierX = 2;
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
-        m_game_state.enemies[i] =  Entity(enemy_texture_ids[i % 3], 0.0f, 1.0f, 1.0f, ENEMY, EASY);
+        m_game_state.enemies[i] =  Entity(enemy_texture_ids[i % 2], 0.0f, 1.0f, 1.0f, ENEMY, HARD);
         m_game_state.enemies[i].set_scale(glm::vec3(1.0f,1.0f,0.0f));
         m_game_state.enemies[i].set_movement(glm::vec3(0.0f));
         m_game_state.enemies[i].set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
         m_game_state.enemies[i].activate();
         m_game_state.enemies[i].set_entity_type(ENEMY);
         m_game_state.enemies[i].set_speed(1.0f);
-        m_game_state.enemies[i].set_ai_type(EASY);
-        float randomY = -5.0f + static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * (1.0f - (-5.0f));
-        m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), randomY - 2, 0.0f));
+        if (i % 2 == 0) {
+            m_game_state.enemies[i].set_ai_type(HARD);
+        }
+        else {
+            m_game_state.enemies[i].set_ai_type(EASY);
+        }
+        float randomY = -2.0f + static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * (1.0f - (-2.0f));
+        m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), randomY - 4, 0.0f));
     }
     
     GLuint heart_texture_id = Utility::load_texture("heart.png");
@@ -148,20 +153,13 @@ void LevelC::initialise()
         m_game_state.hearts[i].set_scale(glm::vec3(0.5f,0.5f,0.0f));
     }
     
-    m_game_state.background = new Entity[2];
-    GLuint background1_texture_id = Utility::load_texture("Background_0.png");
-    GLuint background2_texture_id = Utility::load_texture("Background_1.png");
+    m_game_state.background = new Entity[1];
+    GLuint background1_texture_id = Utility::load_texture("underworld_background.png");
     m_game_state.background[0] = Entity();
     m_game_state.background[0].set_texture_id(background1_texture_id);
     m_game_state.background[0].set_scale(glm::vec3(10.0f, 8.0f, 0.0f));
     m_game_state.background[0].set_position(glm::vec3(5.0f, -4.0f, 0.0f));
     m_game_state.background[0].update(0.0f, NULL, NULL, 0, NULL);
-
-    m_game_state.background[1] = Entity();
-    m_game_state.background[1].set_texture_id(background2_texture_id);
-    m_game_state.background[1].set_scale(glm::vec3(10.0f, 8.0f, 0.0f));
-    m_game_state.background[1].set_position(glm::vec3(5.0f, -4.0f, 0.0f));
-    m_game_state.background[1].update(0.0f, NULL, NULL, 0, NULL);
 
     
     /**
@@ -173,7 +171,9 @@ void LevelC::initialise()
     Mix_PlayMusic(m_game_state.bgm, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2.0);
     
-    m_game_state.enemydeath_sfx = Mix_LoadWAV("jump-3-236683.wav");
+    m_game_state.levelclear_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/level-completed-230568.wav");
+    m_game_state.enemydeath_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/8-bit-power-down-2-shortened.wav");
+    m_game_state.playerdeath_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/you-died.wav");
 }
 
 void LevelC::update(float delta_time)
@@ -186,6 +186,7 @@ void LevelC::update(float delta_time)
             m_game_state.lives -= 1;
             m_game_state.death = false;
             m_game_state.reset = true;
+            Mix_PlayChannel(-1, m_game_state.playerdeath_sfx, 0);
         }
         if (m_game_state.lives == 0) {
             m_game_state.lose = true;
@@ -200,6 +201,7 @@ void LevelC::update(float delta_time)
             m_game_state.lives -= 1;
             m_game_state.death = false;
             m_game_state.reset = true;
+            Mix_PlayChannel(-1, m_game_state.playerdeath_sfx, 0);
         }
         if (m_game_state.lives == 0) {
             m_game_state.lose = true;
@@ -221,26 +223,30 @@ void LevelC::update(float delta_time)
     
     for (int i = 0; i < PROJECTILE_COUNT; i++) {
         if (m_game_state.player_projectiles[i].isActive()){
-            m_game_state.player_projectiles[i].update(delta_time, NULL, m_game_state.enemies, ENEMY_COUNT, NULL);
+            if (m_game_state.player_projectiles[i].update(delta_time, NULL, m_game_state.enemies, ENEMY_COUNT, NULL) == 5) {
+                Mix_PlayChannel(-1, m_game_state.enemydeath_sfx, 0);
+            }
         }
     }
-
+    
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
         if (m_game_state.enemies[i].isActive() && !m_game_state.lose){
             m_game_state.enemies[i].update(delta_time, m_game_state.player, NULL, 0, NULL);
         }
     }
-
     
     
     
-    if (m_game_state.player->get_position().x > 10.0f) m_game_state.next_scene_id = 1;
+    
+    if (m_game_state.player->get_position().x > 10.0f) {
+        m_game_state.player->set_position(glm::vec3(0.0f, m_game_state.player->get_position().y, 0.0f));
+    }
 }
 
 void LevelC::render(ShaderProgram *program)
 {
-    for(int i = 0; i < 2; i++) {
+    for(int i = 0; i < 1; i++) {
         m_game_state.background[i].render(program);
     }
     int num_active = ENEMY_COUNT;
@@ -274,12 +280,17 @@ void LevelC::render(ShaderProgram *program)
               glm::vec3(2.0f,-1.0f,0.0f));
         Utility::draw_text(program, g_font_texture_id, "Press r to retry", 0.5f, 0.05f,
               glm::vec3(1.0f,-2.0f,0.0f));
+
     }
     if (num_active == 0) {
         GLuint g_font_texture_id = Utility::load_texture("font1.png");
-        Utility::draw_text(program, g_font_texture_id, "Level Clear", 0.5f, 0.05f,
+        Utility::draw_text(program, g_font_texture_id, "Game Win", 0.5f, 0.05f,
               glm::vec3(2.0f,-2.0f,0.0f));
         m_game_state.won = true;
+        if (!levelC_played){
+            Mix_PlayChannel(-1, m_game_state.levelclear_sfx, 0);
+            levelC_played = true;
+        }
     }
     
     m_game_state.player->render(program);

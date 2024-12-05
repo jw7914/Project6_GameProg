@@ -13,6 +13,7 @@
 #include "ShaderProgram.h"
 #include "Entity.h"
 #include "Utility.h"
+#include <random>
 
 
 int Entity::projectile_activate(Entity *collideable_entities, int collidable_entity_count) {
@@ -35,40 +36,72 @@ int Entity::projectile_activate(Entity *collideable_entities, int collidable_ent
 
 void Entity::ai_activate(Entity *player, float delta_time)
 {
+    static thread_local std::random_device rd;
+    static thread_local std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(1, 30);
 
-    if (m_ai_type == EASY){
+    // Track scale state and timer
+    static float scale_timer = 0.0f;
+    static bool is_scaled_down = false;
+    static const glm::vec3 original_scale(1.0f, 1.0f, 1.0f);
+
+    if (m_ai_type == EASY) {
         float movement = -3.0f;
-
         m_movement = glm::vec3(movement, 0.0f, 0.0f);
-            
+
         if (m_collided_bottom) {
             set_jumping_power(5.0f);
         }
     }
+
     if (m_ai_type == MEDIUM) {
         m_theta += 1.0f * delta_time;
         float movement = glm::sin(m_theta) * 1.25f;
-        m_movement = glm::vec3(-3.0f, movement, 0.0f);
+        m_movement = glm::vec3(-4.0f, movement, 0.0f);
+        if (m_position.y <= -7.0f) {
+            m_movement = glm::vec3(-4.0f, 1, 0.0f);
+        }
+        if (m_position.y >= -0.75) {
+            m_movement = glm::vec3(-4.0f, -1, 0.0f);
+        }
     }
-    
+
     if (m_ai_type == HARD) {
-        // Determine movement direction on the x-axis
-        if (m_position.x > player->get_position().x) {
-            m_movement.x = -1.0f;
-        } else if (m_position.x < player->get_position().x) {
-            m_movement.x = 1.0f;
+        m_theta += 1.0f * delta_time;
+        float movement = glm::sin(m_theta) * 1.25f;
+        m_movement = glm::vec3(-4.0f, movement, 0.0f);
+
+        if (m_position.y <= -7.0f) {
+            m_movement = glm::vec3(-4.0f, 1, 0.0f);
+        }
+        if (m_position.y >= -0.75) {
+            m_movement = glm::vec3(-4.0f, -1, 0.0f);
         }
 
-        // Determine movement direction on the y-axis
-        if (m_position.y < player->get_position().y && m_collided_bottom) {
-            set_jumping_power(5.0f);
+        if (!is_scaled_down && dist(gen) == 10) {
+            // Scale down
+            m_scale = glm::vec3(0.5f, 0.5f, 0.0f);
+            m_height *= 0.5f;
+            m_width *= 0.5f;
+            is_scaled_down = true;
+            scale_timer = 0.0f;
+        }
+
+        if (is_scaled_down) {
+            scale_timer += delta_time;
+            if (scale_timer >= 2.0f) {
+                m_scale = original_scale;
+                m_height *= 2.0f;
+                m_width *= 2.0f;
+                is_scaled_down = false;
+            }
         }
     }
+
     if (m_ai_type == IDLE) {
         m_movement = glm::vec3(1.0f, 0.0f, 0.0f);
     }
 }
-
 
 // Default constructor
 Entity::Entity()
