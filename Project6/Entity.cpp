@@ -48,7 +48,25 @@ void Entity::ai_activate(Entity *player, float delta_time)
     if (m_ai_type == EASY) {
         float movement = -3.0f;
         m_movement = glm::vec3(movement, 0.0f, 0.0f);
+        
+        if (!is_scaled_down && dist(gen) == 10) {
+            // Scale down
+            m_scale = glm::vec3(0.5f, 0.5f, 0.0f);
+            m_height *= 0.5f;
+            m_width *= 0.5f;
+            is_scaled_down = true;
+            scale_timer = 0.0f;
+        }
 
+        if (is_scaled_down) {
+            scale_timer += delta_time;
+            if (scale_timer >= 2.0f) {
+                m_scale = original_scale;
+                m_height *= 2.0f;
+                m_width *= 2.0f;
+                is_scaled_down = false;
+            }
+        }
         if (m_collided_bottom) {
             set_jumping_power(5.0f);
         }
@@ -99,7 +117,8 @@ void Entity::ai_activate(Entity *player, float delta_time)
     }
 
     if (m_ai_type == IDLE) {
-        m_movement = glm::vec3(1.0f, 0.0f, 0.0f);
+        float movement = -3.0f;
+        m_movement = glm::vec3(movement, 0.0f, 0.0f);
     }
 }
 

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BF315B102D01267000A9B5BD /* 8-bit-power-down-2-shortened.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B0F2D01266A00A9B5BD /* 8-bit-power-down-2-shortened.wav */; };
-		BF315B122D0126FA00A9B5BD /* victory-96688.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B112D0126F300A9B5BD /* victory-96688.wav */; };
 		BF315B162D01287600A9B5BD /* level-completed-230568.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B132D01285700A9B5BD /* level-completed-230568.wav */; };
 		BF315B172D01287600A9B5BD /* victory-96688 2.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B142D01285700A9B5BD /* victory-96688 2.wav */; };
 		BF315B182D01287600A9B5BD /* you-died.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF315B152D01285700A9B5BD /* you-died.wav */; };
@@ -56,7 +55,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				BF315B122D0126FA00A9B5BD /* victory-96688.wav in CopyFiles */,
 				BF315B162D01287600A9B5BD /* level-completed-230568.wav in CopyFiles */,
 				BF315B172D01287600A9B5BD /* victory-96688 2.wav in CopyFiles */,
 				BF315B182D01287600A9B5BD /* you-died.wav in CopyFiles */,
@@ -88,7 +86,6 @@
 
 /* Begin PBXFileReference section */
 		BF315B0F2D01266A00A9B5BD /* 8-bit-power-down-2-shortened.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "8-bit-power-down-2-shortened.wav"; sourceTree = "<group>"; };
-		BF315B112D0126F300A9B5BD /* victory-96688.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "victory-96688.wav"; sourceTree = "<group>"; };
 		BF315B132D01285700A9B5BD /* level-completed-230568.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "level-completed-230568.wav"; sourceTree = "<group>"; };
 		BF315B142D01285700A9B5BD /* victory-96688 2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "victory-96688 2.wav"; sourceTree = "<group>"; };
 		BF315B152D01285700A9B5BD /* you-died.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "you-died.wav"; sourceTree = "<group>"; };
@@ -187,7 +184,6 @@
 				BF315B152D01285700A9B5BD /* you-died.wav */,
 				BF315B0F2D01266A00A9B5BD /* 8-bit-power-down-2-shortened.wav */,
 				BF41DB182CFD2DCE0081F250 /* dooblydoo.mp3 */,
-				BF315B112D0126F300A9B5BD /* victory-96688.wav */,
 				BF41DB1C2CFD2DCE0081F250 /* Entity.h */,
 				BF41DB1D2CFD2DCE0081F250 /* Entity.cpp */,
 				BF41DB1E2CFD2DCE0081F250 /* font1.png */,

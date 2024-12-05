@@ -130,14 +130,14 @@ void LevelA::initialise()
     int multiplierX = 2;
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
-        m_game_state.enemies[i] =  Entity(enemy_texture_ids[i % 3], 0.0f, 1.0f, 1.0f, ENEMY, EASY);
+        m_game_state.enemies[i] =  Entity(enemy_texture_ids[i % 3], 0.0f, 1.0f, 1.0f, ENEMY, IDLE);
         m_game_state.enemies[i].set_scale(glm::vec3(1.0f,1.0f,0.0f));
         m_game_state.enemies[i].set_movement(glm::vec3(0.0f));
         m_game_state.enemies[i].set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
         m_game_state.enemies[i].activate();
         m_game_state.enemies[i].set_entity_type(ENEMY);
         m_game_state.enemies[i].set_speed(1.0f);
-        m_game_state.enemies[i].set_ai_type(EASY);
+        m_game_state.enemies[i].set_ai_type(IDLE);
         float randomY = -5.0f + static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) * (1.0f - (-5.0f));
         m_game_state.enemies[i].set_position(glm::vec3(10.0f + (i * multiplierX), randomY - 2, 0.0f));
     }

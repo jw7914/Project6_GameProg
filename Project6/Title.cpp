@@ -130,7 +130,7 @@ void Title::initialise()
     Mix_PlayMusic(m_game_state.bgm, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2.0);
     
-    m_game_state.enemydeath_sfx = Mix_LoadWAV("bounce.wav");
+    m_game_state.enemydeath_sfx = Mix_LoadWAV("Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/victory-96688.wav");
 }
 
 void Title::update(float delta_time)

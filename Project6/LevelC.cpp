@@ -171,7 +171,7 @@ void LevelC::initialise()
     Mix_PlayMusic(m_game_state.bgm, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2.0);
     
-    m_game_state.levelclear_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/level-completed-230568.wav");
+    m_game_state.levelclear_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/victory-96688 2.wav");
     m_game_state.enemydeath_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/8-bit-power-down-2-shortened.wav");
     m_game_state.playerdeath_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/you-died.wav");
 }
