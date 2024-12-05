@@ -11,7 +11,7 @@ constexpr char ENEMY1_FILEPATH[]       = "frankie.png";
 constexpr char ENEMY2_FILEPATH[]       = "witch.png";
 constexpr char ENEMY3_FILEPATH[]       = "mummy.png";
 constexpr char PROJECTILE_FILEPATH[]       = "arrow.png";
-bool play = false;
+bool levelA_played = false;
 
 
 
@@ -291,9 +291,9 @@ void LevelA::render(ShaderProgram *program)
         Utility::draw_text(program, g_font_texture_id, "Level Clear", 0.5f, 0.05f,
               glm::vec3(2.0f,-2.0f,0.0f));
         m_game_state.won = true;
-        if (!play){
+        if (!levelA_played){
             Mix_PlayChannel(-1, m_game_state.levelclear_sfx, 0);
-            play = true;
+            levelA_played = true;
         }
     }
     
