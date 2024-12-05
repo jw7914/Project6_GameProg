@@ -241,7 +241,7 @@ void LevelB::update(float delta_time)
 
 void LevelB::render(ShaderProgram *program)
 {
-    for(int i = 0; i < 2; i++) {
+    for(int i = 0; i < 1; i++) {
         m_game_state.background[i].render(program);
     }
     int num_active = ENEMY_COUNT;
