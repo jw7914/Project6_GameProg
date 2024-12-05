@@ -126,7 +126,7 @@ void Title::initialise()
      */
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
     
-    m_game_state.bgm = Mix_LoadMUS("galactic.mp3");
+    m_game_state.bgm = Mix_LoadMUS("SCP-x7x.mp3");
     Mix_PlayMusic(m_game_state.bgm, -1);
     Mix_VolumeMusic(MIX_MAX_VOLUME / 2.0);
     

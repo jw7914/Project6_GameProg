@@ -164,9 +164,9 @@ void LevelB::initialise()
      */
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
     
-    m_game_state.bgm = Mix_LoadMUS("galactic.mp3");
+    m_game_state.bgm = Mix_LoadMUS("SCP-x2x.mp3");
     Mix_PlayMusic(m_game_state.bgm, -1);
-    Mix_VolumeMusic(MIX_MAX_VOLUME / 2.0);
+    Mix_VolumeMusic(MIX_MAX_VOLUME);
     
     m_game_state.levelclear_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/level-completed-230568.wav");
     m_game_state.enemydeath_sfx = Mix_LoadWAV("/Users/jasonwu/Desktop/Coding/CompSciClasses/Game_Programming/Project6_GameProg/Project6/8-bit-power-down-2-shortened.wav");
