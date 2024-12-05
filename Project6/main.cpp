@@ -1,7 +1,7 @@
 /**
 * Author: Jason Wu
 * Assignment: Halloween Defense
-* Date due: [Your presentation date], 2:00pm
+* Date due: December 6th, 2:00pm
 * I pledge that I have completed this assignment without
 * collaborating with anyone else, in conformance with the
 * NYU School of Engineering Policies and Procedures on
